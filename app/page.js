@@ -1,11 +1,12 @@
-import Image from "next/image";
+import HeroSection from "../components/HeroSection";
 import FloatingOptions from "../components/FloatingOptions";
 
 export default function Home() {
   return (
-    <div className="space-y-8 relative">
-      {/* Your existing content here */}
+    <div className="relative">
+      <HeroSection />
       <FloatingOptions />
+      {/* Add other sections of your homepage here */}
     </div>
   );
 }

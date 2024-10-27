@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${notoSansDevanagari.variable} antialiased`}>
         <Navbar />
-        <main className="container mx-auto p-4 min-h-screen">
+        <main >
           {children}
         </main>
         <Footer />
