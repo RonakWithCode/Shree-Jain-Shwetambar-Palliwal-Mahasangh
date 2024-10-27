@@ -1,13 +1,17 @@
 import HeroSection from "../components/HeroSection";
 import FloatingOptions from "../components/FloatingOptions";
+// import VideoSection from "../components/VideoSection"; // New component
+import { SimpleWave, GradientWave, LayeredWave, AnimatedWave } from '../components/Waves';
+import VideoTextSection from "@/components/VideoTextSection";
 
 export default function Home() {
   return (
-    <div className="relative">
+    <div>
       <HeroSection />
       <FloatingOptions />
-      
-      {/* Add other sections of your homepage here */}
+      <AnimatedWave />
+      <GradientWave rotate={true} />
+      <VideoTextSection />
     </div>
   );
 }

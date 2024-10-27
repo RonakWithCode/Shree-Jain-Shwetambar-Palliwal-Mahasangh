@@ -29,3 +29,21 @@ a {
 a:hover {
   color: var(--secondary);
 }
+
+/* Animation delay utilities */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* Animation fill mode */
+.fill-mode-forwards {
+  animation-fill-mode: forwards;
+}
+
+/* Add these styles for the wave animation if desired */
+.wave-bg {
+  background: linear-gradient(45deg, #FFE169, #FFB800);
+  background-size: 200% 200%;
+}

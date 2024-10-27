@@ -30,11 +30,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} ${notoSansDevanagari.variable} antialiased`}>
-        <Navbar />
-        <main >
-          {children}
-        </main>
-        <Footer />
+        <div className="animate-fade-in">
+          <Navbar />
+          <main className="animate-slide-up delay-200">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

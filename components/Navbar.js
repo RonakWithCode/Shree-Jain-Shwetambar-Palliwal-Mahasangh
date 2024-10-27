@@ -51,29 +51,43 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-white shadow-md sticky top-0 z-50 animate-slide-down">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center py-4">
-          <Link href="/" className="flex items-center space-x-2">
-            <Image src="/images/jain-logo.jpg" alt="श्री जैन श्वेतांबर पल्लीवाल महासंघ Logo" width={60} height={60} priority sizes="(max-width: 768px) 40px, 60px" className="rounded-full" />
-            <span className="text-lg md:text-xl font-bold text-jain-red font-hindi">श्री जैन श्वेतांबर पल्लीवाल महासंघ</span>
+        <div className="flex justify-between items-center py-3 md:py-4">
+          {/* Logo animation */}
+          <Link href="/" className="flex items-center space-x-2 md:space-x-3 animate-slide-right">
+            <Image 
+              src="/images/jain-logo.jpg" 
+              alt="श्री जैन श्वेतांबर पल्लीवाल महासंघ Logo" 
+              width={60} 
+              height={60} 
+              priority 
+              sizes="(max-width: 640px) 40px, (max-width: 768px) 50px, 60px" 
+              className=" w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14"
+            />
+            <span className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-jain-red font-hindi">
+              श्री जैन श्वेतांबर पल्लीवाल महासंघ
+            </span>
           </Link>
-          <div className="hidden lg:flex space-x-1">
-            {navItems.map((item) => (
-              <div key={item.href} className="relative group" ref={dropdownRef}>
+          {/* Nav items animation */}
+          <div className="hidden lg:flex space-x-2 xl:space-x-4">
+            {navItems.map((item, index) => (
+              <div key={item.href} 
+                   className={`relative group animate-fade-in`} 
+                   style={{ animationDelay: `${index * 100}ms` }}>
                 <button 
                   onClick={() => toggleDropdown(item.href)}
-                  className="text-gray-700 hover:text-jain-red font-hindi py-2 px-3 rounded transition duration-300 focus:outline-none"
+                  className="text-gray-700 hover:text-jain-red font-hindi py-2 px-3 xl:px-4 rounded transition duration-300 focus:outline-none text-base lg:text-lg xl:text-xl"
                 >
                   {item.label}
                   {item.subItems && (
-                    <svg className="w-4 h-4 ml-1 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg className="w-4 h-4 ml-1 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   )}
                 </button>
                 {item.subItems && activeDropdown === item.href && (
-                  <div className="absolute left-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 border-t-4 border-orange-500">
+                  <div className="absolute left-0 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 border-t-4 border-orange-500">
                     <div className="py-1" role="menu" aria-orientation="vertical">
                       {item.subItems.map((subItem) => (
                         <Link
