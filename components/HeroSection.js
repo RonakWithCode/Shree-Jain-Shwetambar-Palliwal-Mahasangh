@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from 'react';
 import Image from "next/image";
-import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import image1 from "@/public/images/vidhva.jpg"
 import image2 from "@/public/images/sadhrmik.jpeg"
@@ -13,7 +12,7 @@ import image7 from "@/public/images/tirth.jpeg"
 
 const slides = [
   {
-    image: image1,
+    image: "/images/hero/vidhva.jpg",
     title: 'संघ द्वारा संचालित प्रवृत्तियां',
     description: 'विधवा पैंशन योजना प्रतिमाह 1000 रु. (इस समय 70 विधवाओं को पैंशन दी जा रही है).'
   },
@@ -80,55 +79,38 @@ const HeroSection = () => {
         <p className="font-hindi">कायदा/समीक्षा केवल लिखित में ही मान्य होगी। मौखिक सूचना/शिकायत एवं समीक्षा की प्रति उत्तर की जवाबदेही नहीं होगी। कृपया भविष्य में मौखिक के बजाय लिखित रूप में WhatsApp 9602026899 अथवा ईमेल आईडी- helpdesk@sadhumargi.com अथवा Post से।</p>
       </div>
 
-      <div className="relative h-screen">
-        <AnimatePresence initial={false}>
-          <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0"
+      <div className="relative h-screen overflow-hidden">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-500 ${
+              index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
           >
             <Image
-              src={slides[currentSlide].image}
-              alt={slides[currentSlide].title}
+              src={slide.image}
+              alt={slide.title}
               layout="fill"
               objectFit="cover"
               quality={100}
             />
             <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30" />
-          </motion.div>
-        </AnimatePresence>
-
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="container mx-auto px-4 text-center text-white">
-            <motion.h1 
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 font-hindi"
-            >
-              {slides[currentSlide].title}
-            </motion.h1>
-            <motion.p 
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="text-lg sm:text-xl md:text-2xl mb-8 font-hindi max-w-3xl mx-auto"
-            >
-              {slides[currentSlide].description}
-            </motion.p>
-            <motion.button
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              className="bg-jain-red text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-jain-red/80 transition-colors"
-            >
-              अधिक जानें
-            </motion.button>
+            
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="container mx-auto px-4 text-center text-white">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 font-hindi transition-all duration-300 ease-in-out transform translate-y-0 opacity-100">
+                  {slide.title}
+                </h1>
+                <p className="text-lg sm:text-xl md:text-2xl mb-8 font-hindi max-w-3xl mx-auto transition-all duration-300 ease-in-out transform translate-y-0 opacity-100">
+                  {slide.description}
+                </p>
+                <button className="bg-jain-red text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-jain-red/80 transition-colors">
+                  अधिक जानें
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
 
         {/* Navigation arrows */}
         <button onClick={prevSlide} className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 p-3 rounded-full transition-colors">
@@ -147,7 +129,7 @@ const HeroSection = () => {
                 setCurrentSlide(index);
                 setIsAutoPlaying(false);
               }}
-              className={`w-3 h-3 rounded-full ${
+              className={`w-3 h-3 rounded-full transition-colors ${
                 index === currentSlide ? 'bg-white' : 'bg-white/50'
               }`}
             />
@@ -159,3 +141,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
