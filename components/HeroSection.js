@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import Image from "next/image";
 import { FaChevronLeft, FaChevronRight, FaQuoteLeft } from 'react-icons/fa';
-import { motion, AnimatePresence } from 'framer-motion';
 import image1 from "@/public/images/vidhva.jpg"
 import image2 from "@/public/images/sadhrmik.jpeg"
 import image3 from "@/public/images/serve.jpeg"
@@ -10,7 +9,6 @@ import image4 from "@/public/images/serve.jpeg"
 import image5 from "@/public/images/serve.jpeg"
 import image6 from "@/public/images/serve.jpeg"
 import image7 from "@/public/images/tirth.jpeg"
-
 
 const slides = [
   {
@@ -29,12 +27,12 @@ const slides = [
     description: 'असहाय साधर्मिक भाई बहिनों को भरण पोषण हेतु 1000 रु. प्रति माह सहायता करना।'
   },
   {
-    image: image3,
+    image: image4,
     title: 'आध्यात्मिक प्रशिक्षण',
     description: 'पल्लीवाल संदेश मासिक पत्रिका के प्रकाशन द्वारा धार्मिक एवं सामाजिक गतिविधियों का प्रचार प्रसार करना।'
   },
   {
-    image: image6,
+    image: image5,
     title: 'सामाजिक सेवा गतिविधियाँ',
     description: 'पल्लीवाल शिरोमणि श्री जोधराज दीवान छात्रवृत्ति योजना में 12वीं कक्षा उत्तीर्ण को 12000 रु. की एक मुश्त छात्रदृति दी जा रही है।'
   },
@@ -85,64 +83,47 @@ const HeroSection = () => {
         <div className="flex flex-col md:flex-row items-center">
           {/* Left side - Image */}
           <div className="w-full md:w-1/2 mb-8 md:mb-0">
-            <motion.div 
-              className="bg-orange-300 p-2 sm:p-4 rounded-2xl shadow-2xl overflow-hidden"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Image
-                src={slides[currentSlide].image}
-                alt={slides[currentSlide].title}
-                width={800}
-                height={600}
-                className="rounded-xl w-full h-auto transform hover:scale-105 transition-transform duration-300"
-              />
-            </motion.div>
+            <div className="bg-orange-300 p-2 sm:p-4 rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-orange-400/50">
+              <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px]"> {/* Fixed height container */}
+                <Image
+                  src={slides[currentSlide].image}
+                  alt={slides[currentSlide].title}
+                  fill
+                  style={{ objectFit: 'cover', objectPosition: 'center' }}
+                  className="rounded-xl transition-transform duration-300 hover:scale-105"
+                />
+              </div>
+            </div>
           </div>
           
           {/* Right side - Text content */}
           <div className="w-full md:w-1/2 md:pl-8 lg:pl-12">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentSlide}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.5 }}
+            <div className="transition-opacity duration-300 ease-in-out">
+              <FaQuoteLeft className="text-4xl text-orange-400 mb-4" />
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-orange-600 mb-6 font-hindi leading-tight">{slides[currentSlide].title}</h1>
+              <p className="text-lg sm:text-xl text-gray-700 mb-8 font-hindi">{slides[currentSlide].description}</p>
+              <button 
+                className="bg-jain-red text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-jain-red/90 transition-all duration-300 shadow-lg hover:shadow-jain-red/50 transform hover:scale-105"
               >
-                <FaQuoteLeft className="text-4xl text-orange-400 mb-4" />
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-orange-600 mb-6 font-hindi leading-tight">{slides[currentSlide].title}</h1>
-                <p className="text-lg sm:text-xl text-gray-700 mb-8 font-hindi">{slides[currentSlide].description}</p>
-                <motion.button 
-                  className="bg-jain-red text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-jain-red/90 transition-colors shadow-lg"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  अधिक जानें
-                </motion.button>
-              </motion.div>
-            </AnimatePresence>
+                अधिक जानें
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Navigation arrows */}
-        <motion.button 
+        <button 
           onClick={prevSlide} 
-          className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full transition-colors z-10 shadow-lg"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full transition-all duration-300 z-10 shadow-lg hover:shadow-orange-300/50"
         >
           <FaChevronLeft className="text-orange-500 text-xl sm:text-2xl" />
-        </motion.button>
-        <motion.button 
+        </button>
+        <button 
           onClick={nextSlide} 
-          className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full transition-colors z-10 shadow-lg"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+          className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full transition-all duration-300 z-10 shadow-lg hover:shadow-orange-300/50"
         >
           <FaChevronRight className="text-orange-500 text-xl sm:text-2xl" />
-        </motion.button>
+        </button>
 
         {/* Slide indicators */}
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
