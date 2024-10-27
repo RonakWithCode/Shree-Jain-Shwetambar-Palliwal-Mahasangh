@@ -2,33 +2,50 @@
 import { useState, useEffect } from 'react';
 import Image from "next/image";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import image1 from "@/public/images/vidhva.jpg"
+import image2 from "@/public/images/sadhrmik.jpeg"
+import image3 from "@/public/images/serve.jpeg"
+import image4 from "@/public/images/serve.jpeg"
+import image5 from "@/public/images/serve.jpeg"
+import image6 from "@/public/images/serve.jpeg"
+import image7 from "@/public/images/tirth.jpeg"
 
 const slides = [
   {
-    image: 'https://placehold.co/800x600/orange/white?text=Activities+by+the+Association',
+    image: image1,
     title: 'संघ द्वारा संचालित प्रवृत्तियां',
-    description: 'श्री अ.भा.सा.जैन संघ के साथ महिला व युवा संघ के माध्यम से 30 से अधिक प्रवृत्तियों और आयामों पर देशभर में लोक कल्याणकारी कार्य किए जा रहे हैं।'
+    description: 'विधवा पैंशन योजना प्रतिमाह 1000 रु. (इस समय 70 विधवाओं को पैंशन दी जा रही है).'
   },
   {
-    image: 'https://placehold.co/800x600/purple/white?text=Religious+Education+Programs',
+    image: image2,
     title: 'धार्मिक शिक्षा कार्यक्रम',
-    description: 'हमारे धार्मिक शिक्षा कार्यक्रम युवाओं को जैन धर्म के मूल्यों और सिद्धांतों से परिचित कराते हैं, जिससे वे अपने जीवन में इनका अनुसरण कर सकें।'
+    description: 'साधर्मिक का स्वाबलम्बन हेतु 50000 रु. का सशि का ऋण प्रदान करना ( बिना ब्याज, पुनर्भरण 6 माह बाद 2500 रु, 20 मासिक किश्तों में )'
   },
   {
-    image: 'https://placehold.co/800x600/green/white?text=Social+Service+Activities',
+    image: image3,
     title: 'सामाजिक सेवा गतिविधियाँ',
-    description: 'हमारी सामाजिक सेवा गतिविधियों में गरीबों की सहायता, शिक्षा प्रोत्साहन, और स्वास्थ्य शिविरों का आयोजन शामिल है।'
+    description: 'असहाय साधर्मिक भाई बहिनों को भरण पोषण हेतु 1000 रु. प्रति माह सहायता करना।'
   },
   {
-    image: 'https://placehold.co/800x600/blue/white?text=Spiritual+Training',
+    image: image3,
     title: 'आध्यात्मिक प्रशिक्षण',
-    description: 'हमारे आध्यात्मिक प्रशिक्षण कार्यक्रम व्यक्तियों को आंतरिक शांति और आत्म-जागरूकता प्राप्त करने में मदद करते हैं।'
+    description: 'पल्लीवाल संदेश मासिक पत्रिका के प्रकाशन द्वारा धार्मिक एवं सामाजिक गतिविधियों का प्रचार प्रसार करना।'
   },
   {
-    image: 'https://placehold.co/800x600/teal/white?text=Environmental+Conservation+Initiative',
-    title: 'पर्यावरण संरक्षण पहल',
-    description: 'हमारी पर्यावरण संरक्षण पहल के तहत वृक्षारोपण, जल संरक्षण, और प्लास्टिक मुक्त अभियान चलाए जाते हैं।'
+    image: image6,
+    title: 'सामाजिक सेवा गतिविधियाँ',
+    description: 'पल्लीवाल शिरोमणि श्री जोधराज दीवान छात्रवृत्ति योजना में 12वीं कक्षा उत्तीर्ण को 12000 रु. की एक मुश्त छात्रदृति दी जा रही है।'
   },
+  {
+    image: image6,
+    title: 'संघ द्वारा संचालित प्रवृत्तियां',
+    description: 'सिरस तीर्थ पर भूखणद क्रय व चारदिवारी निर्माण योजना'
+  },
+  {
+    image: image7,
+    title: 'सामाजिक सेवा गतिविधियाँ',
+    description: 'पल्लीवाल जैन समाज के अच्छे पैकेज पर काम कर रहें बच्चों का डाटा कलेक्शन का कार्य किया जा रहा हैं।'
+  }
 ];
 
 const HeroSection = () => {
