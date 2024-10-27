@@ -6,6 +6,7 @@ export default function Home() {
     <div className="relative">
       <HeroSection />
       <FloatingOptions />
+      
       {/* Add other sections of your homepage here */}
     </div>
   );

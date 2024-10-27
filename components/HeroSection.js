@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import Image from "next/image";
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import image1 from "@/public/images/vidhva.jpg"
 import image2 from "@/public/images/sadhrmik.jpeg"
@@ -73,51 +74,85 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="relative bg-gradient-to-b from-yellow-100 to-orange-100">
+    <div className="relative">
       {/* Top banner */}
       <div className="bg-jain-red text-jain-white p-2 text-center text-xs sm:text-sm">
         <p className="font-hindi">कायदा/समीक्षा केवल लिखित में ही मान्य होगी। मौखिक सूचना/शिकायत एवं समीक्षा की प्रति उत्तर की जवाबदेही नहीं होगी। कृपया भविष्य में मौखिक के बजाय लिखित रूप में WhatsApp 9602026899 अथवा ईमेल आईडी- helpdesk@sadhumargi.com अथवा Post से।</p>
       </div>
 
-      <div className="container mx-auto px-4 py-8 sm:py-12 relative">
-        <div className="flex flex-col md:flex-row items-center">
-          {/* Left side - Image */}
-          <div className="w-full md:w-1/2 mb-8 md:mb-0">
-            <div className="bg-orange-300 p-2 sm:p-4 rounded-lg">
-              <Image
-                src={slides[currentSlide].image}
-                alt={slides[currentSlide].title}
-                width={800}
-                height={600}
-                className="rounded-lg w-full h-auto"
-              />
-            </div>
-          </div>
-          
-          {/* Right side - Text content */}
-          <div className="w-full md:w-1/2 md:pl-8 lg:pl-12">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-orange-600 mb-4 sm:mb-6 font-hindi">{slides[currentSlide].title}</h1>
-            <p className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 font-hindi">{slides[currentSlide].description}</p>
+      <div className="relative h-screen">
+        <AnimatePresence initial={false}>
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0"
+          >
+            <Image
+              src={slides[currentSlide].image}
+              alt={slides[currentSlide].title}
+              layout="fill"
+              objectFit="cover"
+              quality={100}
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/30" />
+          </motion.div>
+        </AnimatePresence>
+
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="container mx-auto px-4 text-center text-white">
+            <motion.h1 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 font-hindi"
+            >
+              {slides[currentSlide].title}
+            </motion.h1>
+            <motion.p 
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="text-lg sm:text-xl md:text-2xl mb-8 font-hindi max-w-3xl mx-auto"
+            >
+              {slides[currentSlide].description}
+            </motion.p>
+            <motion.button
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="bg-jain-red text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-jain-red/80 transition-colors"
+            >
+              अधिक जानें
+            </motion.button>
           </div>
         </div>
 
         {/* Navigation arrows */}
-        <button onClick={prevSlide} className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg z-10">
-          <FaChevronLeft className="text-orange-500 text-xl sm:text-2xl" />
+        <button onClick={prevSlide} className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 p-3 rounded-full transition-colors">
+          <FaChevronLeft className="text-white text-2xl" />
         </button>
-        <button onClick={nextSlide} className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg z-10">
-          <FaChevronRight className="text-orange-500 text-xl sm:text-2xl" />
+        <button onClick={nextSlide} className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 p-3 rounded-full transition-colors">
+          <FaChevronRight className="text-white text-2xl" />
         </button>
-      </div>
 
-      {/* Wave pattern */}
-      <div className="w-full overflow-hidden">
-        <svg viewBox="0 0 1440 120" className="w-full h-auto">
-          <path 
-            fill="#FCD34D" 
-            d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"
-          ></path>
-        </svg>
+        {/* Slide indicators */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                setCurrentSlide(index);
+                setIsAutoPlaying(false);
+              }}
+              className={`w-3 h-3 rounded-full ${
+                index === currentSlide ? 'bg-white' : 'bg-white/50'
+              }`}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
