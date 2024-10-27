@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const navItems = [
   { href: '/', label: 'मुखपृष्ठ' },
-  { href: '/acharyadev', label: 'आचार्यदेव', subItems: [
+  { href: '/acharyadev', label: 'श्री जोधराज दीवान', subItems: [
     { href: '/acharyadev/mahaveer', label: 'चरम तीर्थेश भगवान महावीर' },
     { href: '/acharyadev/pat-parampara', label: 'भगवान महावीर पाट परम्परा' },
     { href: '/acharyadev/hukmichand', label: 'आचार्य श्री हुकमीचन्दजी म. सा.' },
