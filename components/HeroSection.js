@@ -75,9 +75,7 @@ const HeroSection = () => {
   return (
     <div className="relative bg-gradient-to-br from-orange-50 via-yellow-100 to-orange-200">
       {/* Top banner */}
-      <div className="bg-jain-red text-jain-white p-2 text-center text-xs sm:text-sm sticky top-0 z-50 shadow-md">
-        <p className="font-hindi text-xs sm:text-sm">कायदा/समीक्षा केवल लिखित में ही मान्य होगी। मौखिक सूचना/शिकायत एवं समीक्षा की प्रति उत्तर की जवाबदेही नहीं होगी। कृपया भविष्य में मौखिक के बजाय लिखित रूप में WhatsApp 9602026899 अथवा ईमेल आईडी- helpdesk@sadhumargi.com अथवा Post से।</p>
-      </div>
+
 
       <div className="container mx-auto px-4 py-6 sm:py-12 relative">
         <div className="flex flex-col md:flex-row items-center">
