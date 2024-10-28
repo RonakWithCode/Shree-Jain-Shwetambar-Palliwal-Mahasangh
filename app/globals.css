@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Add any custom styles here */
+.font-hindi {
+  font-family: var(--font-hindi);
+}
+
+/* Optional: Add smooth transitions */
+@layer utilities {
+  .transition-all {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+}
+
 :root {
   --background: theme('colors.jain.white');
   --foreground: theme('colors.jain.black');

@@ -26,7 +26,6 @@ const GradientWave = ({ className = "", colors = ["#f8d100", "#ffd700"], rotate 
           </linearGradient>
         </defs>
         <path 
-          className="animate-wave-slow"
           d="M0,40 C150,80 350,0 500,40 C650,80 850,0 1000,40 C1150,80 1350,0 1440,40 V140 H0 V40Z"
           fill={`url(#waveGradient-${rotate ? 'rotated' : 'normal'})`}
           style={{ willChange: 'transform' }}
