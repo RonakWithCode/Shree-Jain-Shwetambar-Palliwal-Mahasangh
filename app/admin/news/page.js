@@ -1,9 +1,8 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { FaPlus, FaEdit, FaTrash, FaUpload } from 'react-icons/fa';
-import { databases, storage, ID, DATABASE_ID, COLLECTION_ID, BUCKET_ID } from '@/lib/appwrite';
+import { databases, storage, ID, DATABASE_ID, Query, COLLECTION_ID, BUCKET_ID } from '@/lib/appwrite';
 import Image from 'next/image';
-import { Query } from 'appwrite';
 
 const NEWS_TYPES = {
   TEXT_ONLY: 'TEXT_ONLY',
