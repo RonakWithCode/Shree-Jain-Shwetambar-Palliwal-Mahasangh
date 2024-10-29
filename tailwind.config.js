@@ -21,6 +21,9 @@ module.exports = {
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'wave': 'wave 15s ease-in-out infinite',
         'wave-slow': 'wave 20s ease-in-out infinite',
+        'spin-slow': 'spin 12s linear infinite',
+        'spin-slow-reverse': 'spin 12s linear infinite reverse',
+
       },
       keyframes: {
         'slide-left': {
@@ -75,6 +78,7 @@ module.exports = {
       },
       fontFamily: {
         hindi: ['Noto Sans Devanagari', ...fontFamily.sans],
+        
       },
     },
   },

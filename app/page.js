@@ -1,10 +1,11 @@
 import HeroSection from "../components/HeroSection";
 import FloatingOptions from "../components/FloatingOptions";
 import { AnimatedWave, GradientWave } from '../components/Waves';
-import VideoTextSection from "@/components/VideoTextSection";
+import VideoTextSection from "../components/VideoTextSection";
 import NewsSection from "../components/NewsSection";
 import InfoCard from "../components/InfoCard";
 import ImportantLinks from "../components/ImportantLinks";
+import Motivationline from "../components/Motivationline";
 
 export default function Home() {
   return (
@@ -31,7 +32,11 @@ export default function Home() {
             <ImportantLinks />
           </div>
         </div>
+
+
       </div>
+
+      <Motivationline />
     </div>
   );
 }
