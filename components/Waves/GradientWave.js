@@ -1,6 +1,6 @@
 const GradientWave = ({ className = "", colors = ["#f8d100", "#ffd700"], rotate = false }) => {
   return (
-    <div className={`w-full overflow-hidden relative ${rotate ? 'rotate-180' : ''} ${className}`}
+    <div className={`w-full overflow-hidden  relative ${rotate ? 'rotate-180' : ''} ${className}`}
          style={{ marginTop: rotate ? '-1px' : '0' }}
     >
       <svg 

@@ -1,5 +1,6 @@
 import { databases, Query, DATABASE_ID, COLLECTION_ID } from '@/lib/appwrite';
 
+
 export const newsService = {
   async getNews() {
     try {
