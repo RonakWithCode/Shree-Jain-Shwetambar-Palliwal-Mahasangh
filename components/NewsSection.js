@@ -81,7 +81,7 @@ const NewsSection = () => {
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
                 priority
-                className="object-contain rounded-lg transition-opacity duration-300 hover:scale-105 transition-transform"
+                className="object-contain rounded-lg transition-opacity duration-300 hover:scale-105 "
                 unoptimized={true}
               />
             </div>
