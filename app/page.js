@@ -1,10 +1,10 @@
-import HeroSection from "./components/HeroSection";
-import FloatingOptions from "./components/FloatingOptions";
-import { AnimatedWave, GradientWave } from './components/Waves';
-import VideoTextSection from "@/app/components/VideoTextSection";
-import NewsSection from "./components/NewsSection";
-import InfoCard from "./components/InfoCard";
-import ImportantLinks from "./components/ImportantLinks";
+import HeroSection from "../components/HeroSection";
+import FloatingOptions from "../components/FloatingOptions";
+import { AnimatedWave, GradientWave } from '../components/Waves';
+import VideoTextSection from "@/components/VideoTextSection";
+import NewsSection from "../components/NewsSection";
+import InfoCard from "../components/InfoCard";
+import ImportantLinks from "../components/ImportantLinks";
 
 export default function Home() {
   return (

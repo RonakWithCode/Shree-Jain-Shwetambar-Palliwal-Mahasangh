@@ -1,8 +1,8 @@
 import localFont from "next/font/local";
 import { Noto_Sans_Devanagari } from 'next/font/google';
 import "./globals.css";
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

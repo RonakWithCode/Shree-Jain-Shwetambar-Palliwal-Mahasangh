@@ -1,37 +1,39 @@
 "use client";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { account } from '@/lib/appwrite';
+import useAuth from '@/context/useAuth';
 
 export default function Login() {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { setAuthStatus } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    console.log('Login attempt started for email:', credentials.email);
 
     try {
-      const res = await fetch('/api/admin/auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(credentials),
-        credentials: 'include' // Important for cookies
-      });
-      
-      const data = await res.json();
-      
-      if (data.success) {
-        router.push('/admin/dashboard');
-      } else {
-        setError(data.error || 'Login failed');
-        setLoading(false);
+      // Create Appwrite session
+      console.log('Attempting Appwrite authentication...');
+      const res =  await account.createEmailPasswordSession(
+        credentials.email,
+        credentials.password
+      );
+      console.log('Appwrite session created');
+      if (res) {
+      setAuthStatus(true);
+      router.push('/admin/dashboard');
+
       }
     } catch (err) {
       console.error('Login error:', err);
-      setError('An error occurred during login');
+      setError('Invalid email or password');
+    } finally {
       setLoading(false);
     }
   };

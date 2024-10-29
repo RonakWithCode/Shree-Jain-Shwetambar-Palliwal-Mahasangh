@@ -1,45 +1,36 @@
-import { connectDB } from '@/lib/mongodb';
-import Admin from '@/models/Admin';
-import { signToken } from '@/lib/auth';
 import { NextResponse } from 'next/server';
+import { sign } from 'jsonwebtoken';
 
-export async function POST(req) {
+export async function POST(request) {
+  console.log('Admin auth endpoint called');
   try {
-    await connectDB();
-    const { email, password } = await req.json();
+    const { email } = await request.json();
+    console.log('Email received:', email);
 
-    const admin = await Admin.findOne({ 
-      email,
-      password // In production, use proper password hashing
-    }).lean();
+    // Create JWT token
+    console.log('Creating JWT token...');
+    const token = sign(
+      { 
+        email,
+        role: 'admin',
+        timestamp: Date.now()
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '1d' }
+    );
 
-    if (!admin) {
-      return NextResponse.json({ 
-        success: false, 
-        error: 'Invalid credentials' 
-      }, { status: 401 });
-    }
-
-    const token = await signToken({ 
-      id: admin._id.toString(), 
-      email: admin.email 
-    });
-
-    const response = NextResponse.json({
+    const response = NextResponse.json({ 
       success: true,
-      user: {
-        email: admin.email,
-        id: admin._id.toString()
-      }
+      message: 'Authentication successful'
     });
-
-    // Set HTTP-only cookie
+    
+    // Set cookie
     response.cookies.set('adminToken', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 24 * 60 * 60 // 24 hours
+      maxAge: 86400 // 1 day
     });
 
     return response;
@@ -48,37 +39,6 @@ export async function POST(req) {
     return NextResponse.json({ 
       success: false, 
       error: 'Authentication failed' 
-    }, { status: 500 });
-  }
-}
-
-export async function GET(req) {
-  try {
-    const token = req.cookies.get('adminToken')?.value;
-    
-    if (!token) {
-      return NextResponse.json({ 
-        success: false, 
-        error: 'No token provided' 
-      }, { status: 401 });
-    }
-
-    const decoded = await verifyToken(token);
-    if (!decoded) {
-      return NextResponse.json({ 
-        success: false, 
-        error: 'Invalid token' 
-      }, { status: 401 });
-    }
-
-    return NextResponse.json({ 
-      success: true,
-      user: decoded 
-    });
-  } catch (error) {
-    return NextResponse.json({ 
-      success: false, 
-      error: 'Invalid token' 
     }, { status: 401 });
   }
 }

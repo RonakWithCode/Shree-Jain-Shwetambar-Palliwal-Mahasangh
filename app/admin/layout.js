@@ -4,6 +4,9 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { FaNewspaper, FaCalendarAlt, FaUsers, FaCog, FaTachometerAlt, FaBars, FaTimes } from 'react-icons/fa';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
+import { AuthProvider } from '@/context/authContext';
+import useAuth from '@/context/useAuth';
+import { logout } from '@/lib/auth-service';
 
 const menuItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: FaTachometerAlt },
@@ -13,16 +16,20 @@ const menuItems = [
   { href: '/admin/settings', label: 'Settings', icon: FaCog },
 ];
 
-export default function AdminLayout({ children }) {
+function AdminLayoutContent({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const { setAuthStatus } = useAuth();
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/admin/logout', { method: 'POST' });
-      router.push('/admin/login');
-      router.refresh();
+      const { success } = await logout();
+      if (success) {
+        setAuthStatus(false);
+        router.push('/admin/login');
+        router.refresh();
+      }
     } catch (error) {
       console.error('Logout failed:', error);
     }
@@ -93,5 +100,15 @@ export default function AdminLayout({ children }) {
         </div>
       </div>
     </ProtectedRoute>
+  );
+}
+
+export default function AdminLayout({ children }) {
+  const [authStatus, setAuthStatus] = useState(false);
+
+  return (
+    <AuthProvider value={{ authStatus, setAuthStatus }}>
+      <AdminLayoutContent>{children}</AdminLayoutContent>
+    </AuthProvider>
   );
 }

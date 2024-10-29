@@ -1,6 +1,9 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaPlus, FaEdit, FaTrash, FaUpload } from 'react-icons/fa';
+import { databases, storage, ID, DATABASE_ID, COLLECTION_ID, BUCKET_ID } from '@/lib/appwrite';
+import Image from 'next/image';
+import { Query } from 'appwrite';
 
 const NEWS_TYPES = {
   TEXT_ONLY: 'TEXT_ONLY',
@@ -15,11 +18,13 @@ export default function NewsManagement() {
   const [error, setError] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [formError, setFormError] = useState('');
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [formData, setFormData] = useState({
     type: 'TEXT_ONLY',
     title: '',
     content: '',
     image: '',
+    imageId: '',
     alt: '',
     active: true
   });
@@ -34,110 +39,147 @@ export default function NewsManagement() {
       setLoading(true);
       setError('');
 
-      const res = await fetch('/api/admin/news', {
-        method: 'GET',
-        credentials: 'include', // Important for cookies
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      const data = await res.json();
+      const response = await databases.listDocuments(
+        DATABASE_ID,
+        COLLECTION_ID,
+        [
+          Query.orderDesc('$createdAt'),
+          Query.limit(100)
+        ]
+      );
       
-      if (data.success) {
-        setNews(data.news);
-      } else {
-        setError(data.error || 'Failed to fetch news');
-      }
+      setNews(response.documents);
     } catch (error) {
       console.error('Error fetching news:', error);
-      setError('Failed to fetch news');
+      setError(error.message || 'Failed to fetch news');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      // Create a preview URL for the image
+      const previewUrl = URL.createObjectURL(file);
+      
+      // Update formData with the preview URL and file for later upload
+      setFormData(prev => ({
+        ...prev,
+        image: previewUrl,
+        imageFile: file
+      }));
+    } catch (error) {
+      console.error('Error creating preview:', error);
+      setFormError(error.message || 'Failed to create preview');
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError('');
+    setUploadingImage(true);
 
     try {
-      // Validate form data based on type
-      if (formData.type !== 'IMAGE_ONLY' && !formData.title) {
-        setFormError('Title is required');
-        return;
+      let imageId = formData.imageId;
+      let imageUrl = formData.image;
+
+      // Upload image if there's a new image file
+      if (formData.imageFile) {
+        const upload = await storage.createFile(
+          BUCKET_ID,
+          ID.unique(),
+          formData.imageFile
+        );
+        imageId = upload.$id;
+        console.log(storage.getFilePreview(BUCKET_ID, imageId));
+        
+        imageUrl = storage.getFilePreview(BUCKET_ID, imageId);
       }
 
-      if (['IMAGE_ONLY', 'IMAGE_TITLE', 'IMAGE_TITLE_TEXT'].includes(formData.type) && !formData.image) {
-        setFormError('Image URL is required');
-        return;
-      }
+      const newsData = {
+        type: formData.type,
+        title: formData.title,
+        content: formData.content,
+        image: imageUrl,
+        imageId: imageId,
+        alt: formData.alt,
+        active: formData.active
+      };
 
-      const url = editingId 
-        ? `/api/admin/news/${editingId}`
-        : '/api/admin/news';
-
-      const res = await fetch(url, {
-        method: editingId ? 'PUT' : 'POST',
-        credentials: 'include', // Important for cookies
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        await fetchNews();
-        setShowForm(false);
-        setFormData({
-          type: 'TEXT_ONLY',
-          title: '',
-          content: '',
-          image: '',
-          alt: '',
-          active: true
-        });
-        setEditingId(null);
+      if (editingId) {
+        await databases.updateDocument(
+          DATABASE_ID,
+          COLLECTION_ID,
+          editingId,
+          newsData
+        );
       } else {
-        setFormError(data.error || 'Failed to save news');
+        await databases.createDocument(
+          DATABASE_ID,
+          COLLECTION_ID,
+          ID.unique(),
+          newsData
+        );
       }
+
+      // Clean up the preview URL
+      if (formData.image && formData.image.startsWith('blob:')) {
+        URL.revokeObjectURL(formData.image);
+      }
+
+      await fetchNews();
+      setShowForm(false);
+      resetForm();
     } catch (error) {
       console.error('Error saving news:', error);
       setFormError('Failed to save news');
+    } finally {
+      setUploadingImage(false);
     }
   };
 
   const handleEdit = (item) => {
     setFormData(item);
-    setEditingId(item._id);
+    setEditingId(item.$id);
     setShowForm(true);
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id, imageId) => {
     if (!confirm('Are you sure you want to delete this news item?')) return;
 
     try {
-      const res = await fetch(`/api/admin/news/${id}`, {
-        method: 'DELETE',
-        credentials: 'include', // Important for cookies
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-
-      const data = await res.json();
+      await databases.deleteDocument(DATABASE_ID, COLLECTION_ID, id);
       
-      if (data.success) {
-        await fetchNews();
-      } else {
-        setError(data.error || 'Failed to delete news');
+      if (imageId) {
+        await storage.deleteFile(BUCKET_ID, imageId);
       }
+
+      await fetchNews();
     } catch (error) {
       console.error('Error deleting news:', error);
       setError('Failed to delete news');
     }
+  };
+
+  const resetForm = () => {
+    // Clean up any existing preview URL
+    if (formData.image && formData.image.startsWith('blob:')) {
+      URL.revokeObjectURL(formData.image);
+    }
+    
+    setFormData({
+      type: 'TEXT_ONLY',
+      title: '',
+      content: '',
+      image: '',
+      imageId: '',
+      alt: '',
+      active: true
+    });
+    setEditingId(null);
   };
 
   return (
@@ -201,14 +243,34 @@ export default function NewsManagement() {
             {(formData.type === 'IMAGE_ONLY' || formData.type === 'IMAGE_TITLE' || formData.type === 'IMAGE_TITLE_TEXT') && (
               <>
                 <div>
-                  <label className="block text-gray-700 mb-2">Image URL</label>
-                  <input
-                    type="url"
-                    value={formData.image}
-                    onChange={(e) => setFormData({...formData, image: e.target.value})}
-                    className="w-full p-2 border rounded"
-                    required
-                  />
+                  <label className="block text-gray-700 mb-2">Image</label>
+                  <div className="flex items-center space-x-4">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                      id="image-upload"
+                      disabled={uploadingImage}
+                    />
+                    <label
+                      htmlFor="image-upload"
+                      className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer flex items-center"
+                    >
+                      <FaUpload className="mr-2" />
+                      {uploadingImage ? 'Uploading...' : 'Upload Image'}
+                    </label>
+                    {formData.image && (
+                      <div className="relative w-20 h-20">
+                        <Image
+                          src={formData.image}
+                          alt="Preview"
+                          fill
+                          className="object-cover rounded"
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <label className="block text-gray-700 mb-2">Image Alt Text</label>
@@ -250,15 +312,7 @@ export default function NewsManagement() {
                 type="button"
                 onClick={() => {
                   setShowForm(false);
-                  setEditingId(null);
-                  setFormData({
-                    type: 'TEXT_ONLY',
-                    title: '',
-                    content: '',
-                    image: '',
-                    alt: '',
-                    active: true
-                  });
+                  resetForm();
                 }}
                 className="px-4 py-2 text-gray-600 hover:text-gray-800"
               >
@@ -286,13 +340,16 @@ export default function NewsManagement() {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {news.map((item) => (
-            <div key={item._id} className="bg-white p-4 rounded-lg shadow-md">
+            <div key={item.$id} className="bg-white p-4 rounded-lg shadow-md">
               {item.image && (
-                <img
-                  src={item.image}
-                  alt={item.alt || item.title}
-                  className="w-full h-48 object-cover rounded-md mb-4"
-                />
+                <div className="relative w-full h-48 mb-4">
+                  <Image
+                    src={item.image}
+                    alt={item.alt || item.title}
+                    fill
+                    className="object-cover rounded-md"
+                  />
+                </div>
               )}
               <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
               {item.content && (
@@ -312,7 +369,7 @@ export default function NewsManagement() {
                     <FaEdit size={20} />
                   </button>
                   <button
-                    onClick={() => handleDelete(item._id)}
+                    onClick={() => handleDelete(item.$id, item.imageId)}
                     className="text-red-500 hover:text-red-700"
                   >
                     <FaTrash size={20} />

@@ -5,9 +5,19 @@ const nextConfig = {
         MONGODB_URI: process.env.MONGODB_URI,
     },
     images: {
-        domains: [
-            "placehold.co"
+        remotePatterns: [
+            {
+                protocol: 'http',
+                hostname: 'localhost',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'placehold.co',
+                pathname: '/**',
+            },
         ],
+        unoptimized: true,
     },
 };
 

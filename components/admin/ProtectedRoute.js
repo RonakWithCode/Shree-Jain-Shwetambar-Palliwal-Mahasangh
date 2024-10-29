@@ -1,50 +1,40 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import useAuth from '@/context/useAuth';
+import { checkAuth } from '@/lib/auth-service';
 
 export default function ProtectedRoute({ children }) {
-  const [loading, setLoading] = useState(true);
-  const router = useRouter();
-  const pathname = usePathname();
+    const router = useRouter();
+    const { setAuthStatus } = useAuth();
+    const [isChecking, setIsChecking] = useState(true);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch('/api/admin/check-auth', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          credentials: 'include'
-        });
+    useEffect(() => {
+        const verifyAuth = async () => {
+            console.log('Checking authentication...');
+            const { success, user } = await checkAuth();
+            
+            console.log('Auth check result:', { success, user });
+            setAuthStatus(success);
+            
+            if (!success) {
+                console.log('Redirecting to login...');
+                router.push('/admin/login');
+            }
+            
+            setIsChecking(false);
+        };
 
-        if (!res.ok) {
-          throw new Error('Authentication failed');
-        }
+        verifyAuth();
+    }, [router, setAuthStatus]);
 
-        const data = await res.json();
+    if (isChecking) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+            </div>
+        );
+    }
 
-        if (!data.success) {
-          router.push(`/admin/login?from=${pathname}`);
-        } else {
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error('Auth check failed:', error);
-        router.push('/admin/login');
-      }
-    };
-
-    checkAuth();
-  }, [pathname, router]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
-
-  return children;
+    return children;
 }

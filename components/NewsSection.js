@@ -2,13 +2,13 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { FaChevronLeft, FaChevronRight, FaWhatsapp, FaFacebook } from 'react-icons/fa';
+import { newsService } from '@/services/newsService';
 
-// Define news content types
 const NEWS_TYPES = {
-  TEXT_ONLY: 'TEXT_ONLY',           // Title + Paragraph
-  IMAGE_ONLY: 'IMAGE_ONLY',         // Image only
-  IMAGE_TITLE: 'IMAGE_TITLE',       // Image + Title
-  IMAGE_TITLE_TEXT: 'IMAGE_TITLE_TEXT' // Image + Title + Paragraph
+  TEXT_ONLY: 'TEXT_ONLY',
+  IMAGE_ONLY: 'IMAGE_ONLY',
+  IMAGE_TITLE: 'IMAGE_TITLE',
+  IMAGE_TITLE_TEXT: 'IMAGE_TITLE_TEXT'
 };
 
 const NewsSection = () => {
@@ -17,13 +17,10 @@ const NewsSection = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch news from MongoDB
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await fetch('/api/news');
-        if (!response.ok) throw new Error('Failed to fetch news');
-        const data = await response.json();
+        const data = await newsService.getNews();
         setNewsItems(data);
         setLoading(false);
       } catch (err) {
@@ -43,76 +40,98 @@ const NewsSection = () => {
     setCurrentNews((prev) => (prev - 1 + newsItems.length) % newsItems.length);
   };
 
-  // Render news content based on type
+  const handleShare = (platform, newsItem) => {
+    const shareText = `${newsItem.title}\n${newsItem.content || ''}`;
+    const shareUrl = window.location.href;
+
+    if (platform === 'whatsapp') {
+      window.open(`https://wa.me/?text=${encodeURIComponent(shareText + '\n' + shareUrl)}`, '_blank');
+    } else if (platform === 'facebook') {
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank');
+    }
+  };
+
   const renderNewsContent = (newsItem) => {
+    const containerClasses = "min-h-[400px] md:min-h-[500px] lg:min-h-[600px] w-full flex flex-col justify-center items-center px-4 md:px-8 py-6";
+    
     switch (newsItem.type) {
       case NEWS_TYPES.TEXT_ONLY:
         return (
-          <div className="px-8 py-4">
-            <h3 className="text-orange-500 text-xl mb-4 font-hindi text-center">
-              {newsItem.title}
-            </h3>
-            <p className="text-gray-700 font-hindi text-center">
-              {newsItem.content}
-            </p>
+          <div className={containerClasses}>
+            <div className="w-full max-w-3xl mx-auto h-full flex flex-col justify-center">
+              <h3 className="text-orange-500 text-2xl md:text-3xl lg:text-4xl mb-6 font-hindi text-center">
+                {newsItem.title}
+              </h3>
+              <div className="max-h-[300px] md:max-h-[400px] lg:max-h-[450px] overflow-y-auto">
+                <p className="text-gray-700 font-hindi text-lg md:text-xl text-center leading-relaxed">
+                  {newsItem.content}
+                </p>
+              </div>
+            </div>
           </div>
         );
 
       case NEWS_TYPES.IMAGE_ONLY:
         return (
-          <div className="relative w-full h-[300px] mb-6">
-            <Image 
-              src={newsItem.image}
-              alt={newsItem.alt || "News Image"}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority
-              className="object-contain rounded-lg transition-opacity duration-300"
-              unoptimized={true}
-            />
+          <div className={containerClasses}>
+            <div className="relative w-full max-w-4xl mx-auto h-[300px] md:h-[400px] lg:h-[500px]">
+              <Image 
+                src={newsItem.image}
+                alt={newsItem.alt || "News Image"}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                priority
+                className="object-contain rounded-lg transition-opacity duration-300 hover:scale-105 transition-transform"
+                unoptimized={true}
+              />
+            </div>
           </div>
         );
 
       case NEWS_TYPES.IMAGE_TITLE:
         return (
-          <div className="px-8">
-            <h3 className="text-orange-500 text-xl mb-4 font-hindi text-center">
-              {newsItem.title}
-            </h3>
-            <div className="relative w-full h-[300px] mb-6">
-              <Image 
-                src={newsItem.image}
-                alt={newsItem.alt || newsItem.title}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                priority
-                className="object-contain rounded-lg transition-opacity duration-300"
-                unoptimized={true}
-              />
+          <div className={containerClasses}>
+            <div className="w-full max-w-4xl mx-auto space-y-6">
+              <h3 className="text-orange-500 text-2xl md:text-3xl lg:text-4xl mb-6 font-hindi text-center">
+                {newsItem.title}
+              </h3>
+              <div className="relative w-full h-[250px] md:h-[350px] lg:h-[450px]">
+                <Image 
+                  src={newsItem.image}
+                  alt={newsItem.alt || newsItem.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                  priority
+                  className="object-contain rounded-lg transition-all duration-300 hover:scale-105"
+                  unoptimized={true}
+                />
+              </div>
             </div>
           </div>
         );
 
       case NEWS_TYPES.IMAGE_TITLE_TEXT:
         return (
-          <div className="px-8">
-            <h3 className="text-orange-500 text-xl mb-4 font-hindi text-center">
-              {newsItem.title}
-            </h3>
-            <div className="relative w-full h-[300px] mb-6">
-              <Image 
-                src={newsItem.image}
-                alt={newsItem.alt || newsItem.title}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                priority
-                className="object-contain rounded-lg transition-opacity duration-300"
-                unoptimized={true}
-              />
+          <div className={containerClasses}>
+            <div className="w-full max-w-4xl mx-auto space-y-6">
+              <h3 className="text-orange-500 text-2xl md:text-3xl lg:text-4xl mb-4 font-hindi text-center">
+                {newsItem.title}
+              </h3>
+              <div className="relative w-full h-[200px] md:h-[300px] lg:h-[350px]">
+                <Image 
+                  src={newsItem.image}
+                  alt={newsItem.alt || newsItem.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                  priority
+                  className="object-contain rounded-lg transition-opacity duration-300 hover:scale-105"
+                  unoptimized={true}
+                />
+              </div>
+              <p className="text-gray-700 font-hindi text-center mt-4">
+                {newsItem.content}
+              </p>
             </div>
-            <p className="text-gray-700 font-hindi text-center mt-4">
-              {newsItem.content}
-            </p>
           </div>
         );
 
@@ -152,9 +171,7 @@ const NewsSection = () => {
     <div className="bg-white rounded-lg shadow-md p-6 mb-4">
       <h2 className="text-red-500 text-2xl font-hindi text-center mb-6">समाचार</h2>
       
-      {/* News Content with Navigation */}
       <div className="relative">
-        {/* Navigation Buttons */}
         {newsItems.length > 1 && (
           <>
             <button 
@@ -177,10 +194,8 @@ const NewsSection = () => {
           </>
         )}
 
-        {/* News Content */}
         {renderNewsContent(newsItems[currentNews])}
 
-        {/* News Indicators */}
         {newsItems.length > 1 && (
           <div className="flex justify-center gap-2 mb-4">
             {newsItems.map((_, index) => (
@@ -196,7 +211,6 @@ const NewsSection = () => {
         )}
       </div>
 
-      {/* Social Share Buttons */}
       <div className="flex gap-4 justify-center mt-4">
         <button 
           onClick={() => handleShare('whatsapp', newsItems[currentNews])}

@@ -82,7 +82,7 @@ const HeroSection = () => {
   return (
     <div className="relative">
       {/* Top banner with smooth sliding text */}
-      <div className="bg-[#f8d100] text-jain-black p-2 sticky top-0 z-50 shadow-md overflow-hidden">
+      <div className="bg-[#f8d100] text-jain-black p-2  top-[64px] md:top-[72px] z-30 shadow-md overflow-hidden">
         <div className="animate-slide-left">
           <p className="font-hindi text-xs sm:text-lg whitespace-nowrap">
             कायदा/समीक्षा केवल लिखित में ही मान्य होगी। मौखिक सूचना/शिकायत एवं समीक्षा की प्रति उत्तर की जवाबदेही नहीं होगी। कृपया भविष्य में मौखिक के बजाय लिखित रूप में WhatsApp 9602026899 अथवा ईमेल आईडी- helpdesk@sadhumargi.com अथवा Post से।

@@ -51,7 +51,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50 animate-slide-down">
+    <nav className="bg-white shadow-md sticky top-0 z-40 animate-slide-down">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-3 md:py-4">
           {/* Logo animation */}
@@ -87,7 +87,7 @@ export default function Navbar() {
                   )}
                 </button>
                 {item.subItems && activeDropdown === item.href && (
-                  <div className="absolute left-0 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10 border-t-4 border-orange-500">
+                  <div className="absolute left-0 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 border-t-4 border-orange-500">
                     <div className="py-1" role="menu" aria-orientation="vertical">
                       {item.subItems.map((subItem) => (
                         <Link
