@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import Image from "next/image";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
 import image1 from "@/public/images/vidhva.jpg"
 import image2 from "@/public/images/sadhrmik.jpeg"
 import image3 from "@/public/images/serve.jpeg"
@@ -80,80 +81,130 @@ const HeroSection = () => {
   };
 
   return (
-    <div className="relative">
-      {/* Top banner with smooth sliding text */}
-   
+    <div className="relative overflow-hidden">
+      {/* Decorative Elements */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-orange-200/20 rounded-full blur-3xl -translate-y-1/2" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-red-200/20 rounded-full blur-3xl translate-y-1/2" />
 
-      {/* Main content */}
-      <div className="container mx-auto px-4 py-6 sm:py-12 relative">
-        <div className="flex flex-col md:flex-row items-center gap-8">
-          {/* Image section */}
-          <div className="w-full md:w-1/2">
-            <div className="bg-orange-300/20 p-2 rounded-2xl overflow-hidden transition-shadow duration-300 hover:shadow-lg">
-              <div className="relative w-full h-[200px] sm:h-[300px] md:h-[400px]">
-                <Image
-                  src={slides[currentSlide].image}
-                  alt={slides[currentSlide].title}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  className={`rounded-xl transition-opacity duration-300 ${
-                    isChanging ? 'opacity-50' : 'opacity-100'
-                  }`}
-                />
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8 sm:py-16 relative">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12"
+        >
+          {/* Image Section */}
+          <div className="w-full lg:w-1/2">
+            <div className="relative">
+              {/* Decorative Frame */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-2xl blur-lg" />
+              
+              <div className="relative bg-white p-2 rounded-2xl shadow-xl overflow-hidden 
+                transform hover:scale-[1.02] transition-all duration-500">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentSlide}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="relative w-full h-[250px] sm:h-[400px] lg:h-[500px]"
+                  >
+                    <Image
+                      src={slides[currentSlide].image}
+                      alt={slides[currentSlide].title}
+                      fill
+                      priority
+                      style={{ objectFit: 'cover' }}
+                      className="rounded-xl"
+                    />
+                    
+                    {/* Image Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent 
+                      rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                  </motion.div>
+                </AnimatePresence>
               </div>
             </div>
           </div>
-          
-          {/* Text content */}
-          <div className="w-full md:w-1/2 md:pl-8 lg:pl-12">
-            <div className={`transition-opacity duration-300 ${
-              isChanging ? 'opacity-0' : 'opacity-100'
-            }`}>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-4 font-hindi">
-                {slides[currentSlide].title}
-              </h2>
-              <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-4 sm:mb-8 font-hindi">
-                {slides[currentSlide].description}
-              </p>
-            </div>
+
+          {/* Text Content */}
+          <div className="w-full lg:w-1/2 lg:pl-8">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlide}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.5 }}
+                className="space-y-6"
+              >
+                {/* Slide Counter */}
+                <div className="flex items-center space-x-4 mb-6">
+                  <span className="text-4xl font-bold text-orange-500">
+                    {String(currentSlide + 1).padStart(2, '0')}
+                  </span>
+                  <div className="flex-1 h-0.5 bg-gradient-to-r from-orange-500 to-transparent" />
+                  <span className="text-gray-400">
+                    {String(slides.length).padStart(2, '0')}
+                  </span>
+                </div>
+
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 font-hindi
+                  bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+                  {slides[currentSlide].title}
+                </h2>
+
+                <p className="text-lg sm:text-xl text-gray-600 font-hindi leading-relaxed">
+                  {slides[currentSlide].description}
+                </p>
+
+                {/* Progress Bar */}
+                <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 5, repeat: isAutoPlaying ? Infinity : 0 }}
+                    className="h-full bg-gradient-to-r from-orange-500 to-red-500"
+                  />
+                </div>
+              </motion.div>
+            </AnimatePresence>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Navigation arrows */}
-        <button 
-          onClick={prevSlide} 
-          className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/90 p-2 sm:p-3 rounded-full 
-                     transition-all duration-300 z-10 shadow-md hover:shadow-lg hover:bg-white"
-          aria-label="Previous slide"
-        >
-          <FaChevronLeft className="text-orange-500 text-lg sm:text-xl" />
-        </button>
-        <button 
-          onClick={nextSlide} 
-          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/90 p-2 sm:p-3 rounded-full 
-                     transition-all duration-300 z-10 shadow-md hover:shadow-lg hover:bg-white"
-          aria-label="Next slide"
-        >
-          <FaChevronRight className="text-orange-500 text-lg sm:text-xl" />
-        </button>
+        {/* Navigation Controls */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-4">
+          <button
+            onClick={prevSlide}
+            className="p-2 rounded-full bg-white/90 shadow-lg hover:shadow-xl 
+              transform hover:scale-110 transition-all duration-300"
+          >
+            <FaChevronLeft className="text-orange-500" />
+          </button>
 
-        {/* Slide indicators */}
-        <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                handleSlideChange(index);
-                setIsAutoPlaying(false);
-              }}
-              className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all duration-300 ${
-                index === currentSlide 
-                  ? 'bg-orange-500 w-4 sm:w-5' 
-                  : 'bg-gray-300 hover:bg-gray-400'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+          {/* Slide Indicators */}
+          <div className="flex space-x-2">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => handleSlideChange(index)}
+                className={`transition-all duration-300 ${
+                  index === currentSlide
+                    ? 'w-8 h-2 bg-orange-500'
+                    : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
+                } rounded-full`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={nextSlide}
+            className="p-2 rounded-full bg-white/90 shadow-lg hover:shadow-xl 
+              transform hover:scale-110 transition-all duration-300"
+          >
+            <FaChevronRight className="text-orange-500" />
+          </button>
         </div>
       </div>
     </div>

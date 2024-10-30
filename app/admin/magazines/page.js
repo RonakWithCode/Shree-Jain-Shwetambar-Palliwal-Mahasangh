@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { databases, storage, ID, DATABASE_ID, MAGAZINE_COLLECTION_ID, MAGAZINE_BUCKET_ID, Query } from '@/lib/appwrite';
-import { FaUpload, FaSpinner, FaTrash, FaEdit, FaEye } from 'react-icons/fa';
+import { FaUpload, FaSpinner, FaTrash, FaEdit, FaEye, FaBook, FaCalendar, FaFilePdf } from 'react-icons/fa';
 
 export default function MagazineManagement() {
   const [loading, setLoading] = useState(false);
@@ -158,102 +158,140 @@ export default function MagazineManagement() {
 
   return (
     <div className="max-w-7xl mx-auto p-4 md:p-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Header Section */}
+      <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
+        <div className="flex items-center space-x-4">
+          <div className="bg-indigo-100 p-3 rounded-lg">
+            <FaBook className="text-indigo-600 text-xl" />
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-800">Magazine Management</h1>
+            <p className="text-gray-600 mt-1">Upload and manage your digital magazines</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         {/* Form Section */}
-        <div className="bg-white p-4 md:p-6 rounded-lg shadow">
-          <h1 className="text-2xl font-bold mb-6">
-            {editingId ? 'Edit Magazine' : 'Add New Magazine'}
-          </h1>
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="bg-gradient-to-r from-indigo-600 to-blue-600 px-6 py-4">
+            <h2 className="text-xl font-semibold text-white">
+              {editingId ? 'Edit Magazine' : 'Add New Magazine'}
+            </h2>
+          </div>
           
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="p-6 space-y-6">
             <div className="space-y-2">
-              <label className="block text-sm font-medium">Title</label>
+              <label className="block text-sm font-medium text-gray-700">Magazine Title</label>
               <input
                 type="text"
                 value={formData.title}
                 onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                className="w-full p-2 border rounded"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 
+                focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+                placeholder="Enter magazine title"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <label className="block text-sm font-medium">Publish Date</label>
-              <input
-                type="date"
-                value={formData.publishDate}
-                onChange={(e) => setFormData(prev => ({ ...prev, publishDate: e.target.value }))}
-                className="w-full p-2 border rounded"
-                required
-              />
+              <label className="block text-sm font-medium text-gray-700">Publish Date</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FaCalendar className="text-gray-400" />
+                </div>
+                <input
+                  type="date"
+                  value={formData.publishDate}
+                  onChange={(e) => setFormData(prev => ({ ...prev, publishDate: e.target.value }))}
+                  className="w-full pl-10 p-3 border border-gray-300 rounded-lg focus:ring-2 
+                  focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200"
+                  required
+                />
+              </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-sm font-medium">Cover Image</label>
-              <div className="flex items-center space-x-4">
+            <div className="space-y-4">
+              <label className="block text-sm font-medium text-gray-700">Cover Image</label>
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <label
+                  htmlFor="coverImage"
+                  className="w-full sm:w-auto px-6 py-3 bg-indigo-600 text-white rounded-lg 
+                  cursor-pointer hover:bg-indigo-700 transition-colors flex items-center justify-center"
+                >
+                  <FaUpload className="mr-2" />
+                  Upload Cover
+                </label>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={(e) => handleFileChange(e, 'cover')}
                   className="hidden"
                   id="coverImage"
-                  required
+                  required={!editingId}
                 />
-                <label
-                  htmlFor="coverImage"
-                  className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600"
-                >
-                  <FaUpload className="inline mr-2" />
-                  Upload Cover
-                </label>
                 {preview && (
-                  <img src={preview} alt="Preview" className="h-20 w-20 object-cover rounded" />
+                  <div className="relative group">
+                    <img src={preview} alt="Preview" className="h-32 w-24 object-cover rounded-lg shadow-md" />
+                    <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 
+                    transition-opacity rounded-lg flex items-center justify-center">
+                      <FaTrash className="text-white cursor-pointer" onClick={() => setPreview(null)} />
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="block text-sm font-medium">PDF File</label>
-              <div className="flex items-center space-x-4">
+            <div className="space-y-4">
+              <label className="block text-sm font-medium text-gray-700">PDF File</label>
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <label
+                  htmlFor="pdfFile"
+                  className="w-full sm:w-auto px-6 py-3 bg-indigo-600 text-white rounded-lg 
+                  cursor-pointer hover:bg-indigo-700 transition-colors flex items-center justify-center"
+                >
+                  <FaFilePdf className="mr-2" />
+                  Upload PDF
+                </label>
                 <input
                   type="file"
                   accept=".pdf"
                   onChange={(e) => handleFileChange(e, 'pdf')}
                   className="hidden"
                   id="pdfFile"
-                  required
+                  required={!editingId}
                 />
-                <label
-                  htmlFor="pdfFile"
-                  className="px-4 py-2 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-600"
-                >
-                  <FaUpload className="inline mr-2" />
-                  Upload PDF
-                </label>
                 {formData.pdfFile && (
-                  <span className="text-sm text-gray-600">
+                  <span className="text-sm text-gray-600 truncate max-w-xs">
                     {formData.pdfFile.name}
                   </span>
                 )}
               </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 py-2 bg-green-500 text-white rounded hover:bg-green-600 disabled:bg-gray-400"
+                className="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 
+                disabled:bg-gray-400 transition-colors flex items-center justify-center"
               >
                 {loading ? (
-                  <FaSpinner className="inline animate-spin mr-2" />
-                ) : editingId ? 'Update Magazine' : 'Upload Magazine'}
+                  <>
+                    <FaSpinner className="animate-spin mr-2" />
+                    <span>{editingId ? 'Updating...' : 'Uploading...'}</span>
+                  </>
+                ) : (
+                  <span>{editingId ? 'Update Magazine' : 'Upload Magazine'}</span>
+                )}
               </button>
               
               {editingId && (
                 <button
                   type="button"
                   onClick={resetForm}
-                  className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+                  className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 
+                  transition-colors"
                 >
                   Cancel
                 </button>
@@ -263,47 +301,65 @@ export default function MagazineManagement() {
         </div>
 
         {/* Magazine List Section */}
-        <div className="bg-white p-4 md:p-6 rounded-lg shadow">
-          <h2 className="text-xl font-bold mb-4">Published Magazines</h2>
-          <div className="space-y-4">
-            {magazines.map((magazine) => (
-              <div key={magazine.$id} className="flex items-center justify-between p-4 border rounded hover:bg-gray-50">
-                <div className="flex items-center space-x-4">
-                  <img 
-                    src={magazine.coverImageUrl} 
-                    alt={magazine.title}
-                    className="w-16 h-20 object-cover rounded"
-                  />
-                  <div>
-                    <h3 className="font-medium">{magazine.title}</h3>
-                    <p className="text-sm text-gray-600">
-                      {new Date(magazine.publishDate).toLocaleDateString()}
-                    </p>
+        <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="bg-gradient-to-r from-indigo-600 to-blue-600 px-6 py-4">
+            <h2 className="text-xl font-semibold text-white">Published Magazines</h2>
+          </div>
+          
+          <div className="p-6">
+            <div className="space-y-4">
+              {magazines.length === 0 ? (
+                <div className="text-center py-8 text-gray-500">
+                  No magazines published yet
+                </div>
+              ) : (
+                magazines.map((magazine) => (
+                  <div key={magazine.$id} 
+                    className="flex flex-col sm:flex-row items-start sm:items-center justify-between 
+                    p-4 border rounded-lg hover:bg-gray-50 transition-colors gap-4"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <img 
+                        src={magazine.coverImageUrl} 
+                        alt={magazine.title}
+                        className="w-16 h-20 object-cover rounded-lg shadow-md"
+                      />
+                      <div>
+                        <h3 className="font-medium text-gray-800">{magazine.title}</h3>
+                        <p className="text-sm text-gray-600 flex items-center mt-1">
+                          <FaCalendar className="mr-2" />
+                          {new Date(magazine.publishDate).toLocaleDateString()}
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex space-x-2 w-full sm:w-auto justify-end">
+                      <button
+                        onClick={() => window.open(magazine.pdfFileUrl, '_blank')}
+                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        title="View PDF"
+                      >
+                        <FaEye />
+                      </button>
+                      <button
+                        onClick={() => handleEdit(magazine)}
+                        className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                        title="Edit"
+                      >
+                        <FaEdit />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(magazine.$id, magazine.coverImageId, magazine.pdfFileId)}
+                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                        title="Delete"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
                   </div>
-                </div>
-                
-                <div className="flex space-x-2">
-                  <button
-                    onClick={() => window.open(magazine.pdfFileUrl, '_blank')}
-                    className="p-2 text-blue-600 hover:bg-blue-50 rounded"
-                  >
-                    <FaEye />
-                  </button>
-                  <button
-                    onClick={() => handleEdit(magazine)}
-                    className="p-2 text-green-600 hover:bg-green-50 rounded"
-                  >
-                    <FaEdit />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(magazine.$id, magazine.coverImageId, magazine.pdfFileId)}
-                    className="p-2 text-red-600 hover:bg-red-50 rounded"
-                  >
-                    <FaTrash />
-                  </button>
-                </div>
-              </div>
-            ))}
+                ))
+              )}
+            </div>
           </div>
         </div>
       </div>
