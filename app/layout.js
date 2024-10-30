@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} ${notoSansDevanagari.variable} antialiased`}>
         <div className="animate-fade-in">
           <Navbar />
-          <main className="animate-slide-up delay-200">
+          <main className="overflow-x-scroll animate-slide-up delay-200">
             {children}
           </main>
           <Footer />

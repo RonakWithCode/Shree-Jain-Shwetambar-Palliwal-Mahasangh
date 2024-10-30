@@ -7,25 +7,16 @@ const navItems = [
   { href: '/', label: 'मुखपृष्ठ' },
   { href: '/acharyadev', label: 'श्री जोधराज दीवान', subItems: [
     { href: '/acharyadev/mahaveer', label: 'चरम तीर्थेश भगवान महावीर' },
-    { href: '/acharyadev/pat-parampara', label: 'भगवान महावीर पाट परम्परा' },
-    { href: '/acharyadev/hukmichand', label: 'आचार्य श्री हुकमीचन्दजी म. सा.' },
-    { href: '/acharyadev/shivlal', label: 'आचार्य श्री शिवलाल जी म. सा.' },
-    { href: '/acharyadev/udaysagar', label: 'आचार्य श्री उदयसागरजी म. सा.' },
-    { href: '/acharyadev/chouthmal', label: 'आचार्य श्री चौथमलजी म. सा.' },
-    { href: '/acharyadev/shrilal', label: 'आचार्य श्री श्रीलालजी म. सा.' },
-    { href: '/acharyadev/javaharlal', label: 'आचार्य श्री जवाहरलालजी म. सा.' },
-    { href: '/acharyadev/ganeshlal', label: 'आचार्य श्री गणेशलालजी म. सा.' },
-    { href: '/acharyadev/nanalal', label: 'आचार्य श्री नानालालजी म. सा.' },
-    { href: '/acharyadev/ramlal', label: 'आचार्य श्री रामलाल जी म. सा.' },
   ]},
   { href: '/sangh', label: 'संघ', subItems: [
     { href: '/sangh/parichay', label: 'परिचय' },
     { href: '/sangh/karyakarini', label: 'कार्यकारिणी' },
   ]},
+  // donation
   { href: '/photo-gallery', label: 'फोटो गैलरी' },
   { href: '/sangh-gatividhi', label: 'संघ गतिविधि' },
   { href: '/aavedan-prapatra', label: 'आवेदन प्रपत्र' },
-  { href: '/arth-sahyog', label: 'अर्थ सहयोग' },
+  { href: '/donation', label: 'अर्थ सहयोग' },
   { href: '/sampark', label: 'संपर्क' },
 ];
 

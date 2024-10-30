@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { FaNewspaper, FaCalendarAlt, FaUsers, FaCog, FaTachometerAlt, FaBars, FaTimes, FaBook } from 'react-icons/fa';
+import { FaNewspaper, FaCalendarAlt, FaUsers, FaCog, FaTachometerAlt, FaBars, FaTimes, FaBook, FaUpload } from 'react-icons/fa';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
 import { AuthProvider } from '@/context/authContext';
 import useAuth from '@/context/useAuth';
@@ -11,7 +11,9 @@ import { logout } from '@/lib/auth-service';
 const menuItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: FaTachometerAlt },
   { href: '/admin/news', label: 'News Management', icon: FaNewspaper },
+  { href: '/admin/new-updates', label: 'New Updates', icon: FaUpload },
   { href: '/admin/magazines', label: 'श्रमणोपासक', icon: FaBook },
+  { href: '/admin/hero-slider', label: 'hero-slider', icon: FaBook },
   { href: '/admin/events', label: 'Events', icon: FaCalendarAlt },
   { href: '/admin/members', label: 'Members', icon: FaUsers },
   { href: '/admin/settings', label: 'Settings', icon: FaCog },

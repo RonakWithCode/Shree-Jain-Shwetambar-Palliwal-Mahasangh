@@ -8,11 +8,15 @@ import ImportantLinks from "../components/ImportantLinks";
 import Motivationline from "../components/Motivationline";
 import HomeMagazineSection from "../components/Magazine/HomeMagazineSection";
 import CommunityLeaders from '../components/CommunityLeaders';
+import NewsUpdate from '../components/NewsUpdate';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white via-orange-50/30 to-white">
-      <HeroSection />
+    <div className=" bg-gradient-to-b from-white via-orange-50/30 to-white">
+
+     <NewsUpdate />
+     <HeroSection />
+      
       <FloatingOptions />
       <AnimatedWave />
       <GradientWave className="bg-orange-50" rotate={true} />
