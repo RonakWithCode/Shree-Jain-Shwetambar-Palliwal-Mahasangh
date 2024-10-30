@@ -1,25 +1,26 @@
+import Link from 'next/link';
+
 const ImportantLinks = () => {
   const links = [
     { 
-      title: 'सेंटर पोर्टल',
-      icon: '🏛️',
+      title: 'दान करें',
+      icon: '💰',
+      slug: '/donate',
       gradient: 'from-blue-500 to-blue-600'
     },
     { 
-      title: 'साधुर्मार्ग प्रोफेशनल फोरम',
-      icon: '👥',
+      title: 'फोटो गैलरी',
+      icon: '📸',
+      slug: '/photo-gallery',
       gradient: 'from-green-500 to-green-600'
     },
     { 
-      title: 'श्री अम.आ.स. जैन सद्भावना युवा संघ',
-      icon: '🌟',
+      title: 'हमसे संपर्क करें',
+      icon: '📞',
+      slug: '/contact-us',
       gradient: 'from-yellow-500 to-yellow-600'
     },
-    { 
-      title: 'श्री अम.आ.स. जैन महिला समिति',
-      icon: '🙏',
-      gradient: 'from-purple-500 to-purple-600'
-    },
+
   ];
 
   return (
@@ -44,14 +45,18 @@ const ImportantLinks = () => {
         <ul className="space-y-4 font-hindi">
           {links.map((link, index) => (
             <li key={index} className="transform transition-all duration-300 hover:-translate-y-1">
-              <a href="#" className="group flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-white to-orange-50 border border-orange-100 hover:shadow-md transition-all duration-300">
+              <Link 
+              
+                href={link.slug}
+                className="group flex items-center gap-4 p-4 rounded-xl bg-gradient-to-br from-white to-orange-50 border border-orange-100 hover:shadow-md transition-all duration-300"
+              >
                 <div className={`w-12 h-12 flex items-center justify-center rounded-full bg-gradient-to-r ${link.gradient} text-white shadow-sm group-hover:shadow-md transition-shadow`}>
                   <span className="text-2xl">{link.icon}</span>
                 </div>
                 <span className="text-gray-700 group-hover:text-orange-600 transition-colors">
                   {link.title}
                 </span>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

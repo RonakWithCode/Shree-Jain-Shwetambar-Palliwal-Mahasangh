@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Image from "next/image";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
-import image1 from "@/public/images/vidhva.jpg"
+import image1 from "@/public/images/jain-logo.jpg"
 import image2 from "@/public/images/sadhrmik.jpeg"
 import image3 from "@/public/images/serve.jpeg"
 import image4 from "@/public/images/serve.jpeg"
@@ -14,8 +14,8 @@ import image7 from "@/public/images/tirth.jpeg"
 const slides = [
   {
     image: image1,
-    title: 'संघ द्वारा संचालित प्रवृत्तियां',
-    description: 'विधवा पैंशन योजना प्रतिमाह 1000 रु. (इस समय 70 विधवाओं को पैंशन दी जा रही है).'
+    title: 'महासंघ द्वारा संचालित प्रवृत्तियां',
+    description: 'श्री अ.भा.सा.जैन महासंघ के साथ महिला व युवा महासंघ के माध्यम से 30 से अधिक प्रवृत्तियों और आयामों पर देशभर में लोक कल्याणकारी कार्य किए जा रहे हैं। जिसमें धार्मिक, आध्यात्मिक व सामाजिक कार्य शामिल है। जैसे इदं न मम्, जीवदया, विहार सेवा, उच्च शिक्षा योजना, साहित्य व आगम साहित्य, सर्वधर्मी सहयोग, गुणशील, साधुमार्गी प्रोफेशन फॉर्म आदि प्रवृतियों व आयामों के माध्यम से जन सेवा का कार्य वृहद् स्तर पर किया जा रहा है।.'
   },
   {
     image: image2,
@@ -95,12 +95,12 @@ const HeroSection = () => {
         >
           {/* Image Section */}
           <div className="w-full lg:w-1/2">
-            <div className="relative">
+            <div className="relative aspect-[4/3]">
               {/* Decorative Frame */}
               <div className="absolute -inset-4 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-2xl blur-lg" />
               
               <div className="relative bg-white p-2 rounded-2xl shadow-xl overflow-hidden 
-                transform hover:scale-[1.02] transition-all duration-500">
+                transform hover:scale-[1.02] transition-all duration-500 h-full">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={currentSlide}
@@ -108,15 +108,19 @@ const HeroSection = () => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="relative w-full h-[250px] sm:h-[400px] lg:h-[500px]"
+                    className="relative w-full h-full"
                   >
                     <Image
                       src={slides[currentSlide].image}
                       alt={slides[currentSlide].title}
                       fill
                       priority
-                      style={{ objectFit: 'cover' }}
-                      className="rounded-xl"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      style={{ 
+                        objectFit:"fill",
+                        objectPosition: 'center'
+                      }}
+                      className="rounded-xl "
                     />
                     
                     {/* Image Overlay */}
@@ -150,12 +154,14 @@ const HeroSection = () => {
                   </span>
                 </div>
 
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 font-hindi
-                  bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+                <h2 className="pt-4 text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 font-hindi
+                  bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent
+                  leading-relaxed min-h-[3rem] break-words">
                   {slides[currentSlide].title}
                 </h2>
 
-                <p className="text-lg sm:text-xl text-gray-600 font-hindi leading-relaxed">
+                <p className="text-base sm:text-lg text-gray-600 font-hindi leading-relaxed
+                  break-words whitespace-pre-wrap min-h-[8rem]">
                   {slides[currentSlide].description}
                 </p>
 

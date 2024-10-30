@@ -12,7 +12,8 @@ import {
   FaUpload, 
   FaBook,
   FaSignOutAlt,
-  FaTimes
+  FaTimes,
+  FaImages
 } from 'react-icons/fa';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
 import { AuthProvider } from '@/context/authContext';
@@ -23,11 +24,11 @@ const menuItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: FaTachometerAlt },
   { href: '/admin/news', label: 'News', icon: FaNewspaper },
   { href: '/admin/new-updates', label: 'Updates', icon: FaUpload },
-  { href: '/admin/magazines', label: 'श्रमणोपासक', icon: FaBook },
+  { href: '/admin/magazines', label: 'Magazine management', icon: FaBook },
   { href: '/admin/hero-slider', label: 'Hero Slider', icon: FaNewspaper },
-  { href: '/admin/events', label: 'Events', icon: FaCalendarAlt },
-  { href: '/admin/members', label: 'Members', icon: FaUsers },
-  { href: '/admin/settings', label: 'Settings', icon: FaCog },
+  { href: '/admin/photo-gallery', label: 'Photo Gallery', icon: FaImages},
+  { href: '/admin/contacts', label: 'Contacts', icon: FaUsers },
+  { href: '/admin/application-forms', label: 'application forms', icon: FaUsers },
 ];
 
 function AdminLayoutContent({ children }) {
@@ -62,9 +63,10 @@ function AdminLayoutContent({ children }) {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 mt-[80px]">
         {/* Mobile Header */}
-        <div className="lg:hidden bg-white border-b px-4 py-3 flex items-center justify-between">
+        <div className="lg:hidden bg-white border-b px-4 py-3 flex items-center justify-between 
+          fixed top-[80px] left-0 right-0 z-20">
           <span className="font-semibold text-xl text-gray-800">Admin Panel</span>
           <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-gray-600">
             {sidebarOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
@@ -81,7 +83,7 @@ function AdminLayoutContent({ children }) {
 
         {/* Sidebar */}
         <aside className={`
-          fixed top-0 left-0 z-30 h-full w-64 bg-white border-r transform transition-transform duration-200 ease-in-out
+          fixed top-[80px] left-0 z-30 h-[calc(100vh-80px)] w-64 bg-white border-r transform transition-transform duration-200 ease-in-out
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}>
           {/* Sidebar Header */}
@@ -121,13 +123,17 @@ function AdminLayoutContent({ children }) {
         </aside>
 
         {/* Main Content */}
-        <main className={`
-          transition-all duration-200 ease-in-out
+
+  
+        <main className={` 
+          transition-all duration-200 overflow-x-hidden ease-in-out
           ${sidebarOpen ? 'lg:ml-64' : 'ml-0 lg:ml-64'}
         `}>
           <div className="p-6 pt-20 lg:pt-6">
             {children}
           </div>
+
+          
         </main>
       </div>
     </ProtectedRoute>

@@ -12,30 +12,34 @@ import NewsUpdate from '../components/NewsUpdate';
 
 export default function Home() {
   return (
-    <div className=" bg-gradient-to-b from-white via-orange-50/30 to-white">
+    <div className="bg-gradient-to-b from-white via-orange-50/30 to-white overflow-x-hidden">
+      <div className="relative z-10 max-w-full">
+        <NewsUpdate />
+      </div>
 
-     <NewsUpdate />
-     <HeroSection />
+      <div className="relative z-10 mt-4 max-w-full">
+        <HeroSection />
+      </div>
       
-      <FloatingOptions />
-      <AnimatedWave />
-      <GradientWave className="bg-orange-50" rotate={true} />
+      <div className="max-w-full">
+        <FloatingOptions />
+        <AnimatedWave />
+        <GradientWave className="bg-orange-50" rotate={true} />
+      </div>
       
-      {/* Video Text Section with decorative elements */}
-      <div className="relative">
+      <div className="relative max-w-full">
         <div className="absolute inset-0 bg-[url('/path/to/pattern.svg')] opacity-5"></div>
         <VideoTextSection />
       </div>
       
-      <GradientWave rotate={true} />
+      <div className="max-w-full">
+        <GradientWave rotate={true} />
+      </div>
 
-      {/* News and Info Section with improved layout */}
-      <section className="relative py-16">
-        {/* Decorative Background */}
+      <section className="relative py-16 max-w-full">
         <div className="absolute inset-0 bg-gradient-to-b from-orange-50/50 via-white to-orange-50/30"></div>
         
         <div className="container mx-auto px-4">
-          {/* Section Header */}
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold font-hindi bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent inline-block">
               समाचार और जानकारी
@@ -47,14 +51,11 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Main Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative">
-            {/* Left Column - News Section */}
             <div className="lg:col-span-2 transform hover:scale-[1.01] transition-transform duration-300">
               <NewsSection />
             </div>
             
-            {/* Right Column */}
             <div className="space-y-8">
               <div className="transform hover:scale-[1.02] transition-transform duration-300">
                 <InfoCard />
@@ -66,7 +67,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Decorative Elements */}
         <div className="absolute top-0 left-0 w-32 h-32 -translate-x-1/2 -translate-y-1/2 opacity-10">
           <svg viewBox="0 0 100 100" className="w-full h-full text-orange-400">
             <circle cx="50" cy="50" r="40" fill="currentColor" />
@@ -79,9 +79,11 @@ export default function Home() {
         </div>
       </section>
 
-      <Motivationline />
-      <HomeMagazineSection />
-      <CommunityLeaders />
+      <div className="max-w-full">
+        <Motivationline />
+        <HomeMagazineSection  />
+        <CommunityLeaders />
+      </div>
     </div>
   );
 }

@@ -24,7 +24,7 @@ const leaders = [
 
 export default function CommunityLeaders() {
     return (
-        <div className="py-24 relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-amber-50">
+        <div id='CommunityLeaders' className="py-24 relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-amber-50">
             {/* Decorative Background Pattern */}
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0" style={{

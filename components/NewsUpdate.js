@@ -27,7 +27,7 @@ useEffect(() => {
   return (
     <>
       {newUpdate && newUpdate.Activate && (
-        <div className="bg-[#f8d100] text-jain-black p-2 top-[64px] md:top-[72px] z-30 shadow-md overflow-hidden">
+        <div className="bg-[#f8d100] text-jain-black p-2 top-[64px] md:top-[172px] z-30 shadow-md overflow-hidden">
           <div className="animate-slide-left">
             <p className="font-hindi text-xs sm:text-lg whitespace-nowrap">
               {newUpdate?.text}

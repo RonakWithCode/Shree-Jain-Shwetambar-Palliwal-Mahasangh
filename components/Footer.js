@@ -31,10 +31,12 @@ const AhimsaHand = () => (
 );
 
 const footerLinks = [
-  { href: '/about', label: 'हमारे बारे में', labelEn: 'About Us' },
+  // { href: '/about', label: 'हमारे बारे में', labelEn: 'About Us' },
   { href: '/contact', label: 'संपर्क करें', labelEn: 'Contact' },
-  { href: '/privacy', label: 'गोपनीयता नीति', labelEn: 'Privacy Policy' },
-  { href: '/terms', label: 'नियम और शर्तें', labelEn: 'Terms and Conditions' },
+  { href: '/current-executive', label: 'वर्तमान कार्यकारिणी', labelEn: 'Contact' },
+  { href: '/magazine-officer', label: 'पत्रिका अधिकारी', labelEn: 'Contact' },
+  // { href: '/privacy', label: 'गोपनीयता नीति', labelEn: 'Privacy Policy' },
+  // { href: '/terms', label: 'नियम और शर्तें', labelEn: 'Terms and Conditions' },
 ];
 
 export default function Footer() {
@@ -58,12 +60,9 @@ export default function Footer() {
               <div className="w-10 h-10 mr-3 text-orange-600">
                 <JainSymbol />
               </div>
-              <h3 className="text-2xl font-bold text-orange-800">श्री दिगम्बर जैन समाज</h3>
+              <h3 className="text-2xl font-bold text-orange-800">श्री जैन श्वेतांबर पल्लीवाल महासंघ</h3>
             </div>
-            <p className="text-orange-700 mb-4 font-semibold">
-              अहिंसा परमो धर्मः
-              <span className="block text-sm mt-1 text-orange-600">सर्वभूतहिते रताः</span>
-            </p>
+        
           </div>
 
           {/* Quick Links */}
@@ -96,8 +95,7 @@ export default function Footer() {
             <address className="not-italic space-y-3 text-orange-700">
               <p className="flex items-center">
                 <FaMapMarkerAlt className="text-orange-500 mr-3" />
-                श्री दिगम्बर जैन मंदिर के पास,<br />
-                नई दिल्ली, भारत
+                श्री जैन श्वेतांबर पल्लीवाल महासंघ मंदिर के पास
               </p>
               <p className="flex items-center">
                 <FaPhone className="text-orange-500 mr-3" />
@@ -111,7 +109,7 @@ export default function Footer() {
           </div>
 
           {/* Newsletter */}
-          <div>
+          {/* <div>
             <h4 className="text-xl font-semibold mb-6 text-orange-800 flex items-center justify-center md:justify-start">
               <span className="w-8 h-0.5 bg-orange-400 mr-3"></span>
               समाचार पत्र
@@ -129,7 +127,7 @@ export default function Footer() {
                 सदस्यता लें
               </button>
             </form>
-          </div>
+          </div> */}
         </div>
 
         {/* Bottom Bar - Simplified */}
@@ -140,7 +138,7 @@ export default function Footer() {
             </div>
           </div>
           <p className="text-orange-700">
-            &copy; {new Date().getFullYear()} श्री दिगम्बर जैन समाज। सर्वाधिकार सुरक्षित।
+            &copy; {new Date().getFullYear()} श्री जैन श्वेतांबर पल्लीवाल महासंघ
           </p>
         </div>
       </div>

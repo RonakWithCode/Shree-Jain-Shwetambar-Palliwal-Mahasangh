@@ -4,9 +4,29 @@ import { FaBookOpen, FaMapMarkedAlt, FaUsers } from 'react-icons/fa';
 
 const FloatingOptions = () => {
   const options = [
-    { label: 'प्रवचन का सार', icon: FaBookOpen, color: 'bg-red-500 hover:bg-red-600' },
-    { label: 'विहार जानकारी', icon: FaMapMarkedAlt, color: 'bg-yellow-500 hover:bg-yellow-600' },
-    { label: 'श्रमणोपासक', icon: FaUsers, color: 'bg-green-500 hover:bg-green-600' },
+    { 
+      label: 'महासंघ गतिविधि', 
+      icon: FaBookOpen, 
+      color: 'bg-red-500 hover:bg-red-600',
+      action: () => window.scrollTo({ top: 0, behavior: 'smooth' })
+    },
+    { 
+      label: 'पत्रिका', 
+      icon: FaMapMarkedAlt, 
+      color: 'bg-yellow-500 hover:bg-yellow-600',
+      action: () => {
+        const magazineSection = document.getElementById('magazine-section');
+        if (magazineSection) {
+          magazineSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    },
+    { 
+      label: 'वर्तमान कार्यकारिणी।', 
+      icon: FaUsers, 
+      color: 'bg-green-500 hover:bg-green-600',
+      action: () => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' })
+    },
   ];
 
   return (
@@ -15,6 +35,7 @@ const FloatingOptions = () => {
         {options.map((option, index) => (
           <div
             key={index}
+            onClick={option.action}
             className={`${option.color} text-white p-3 rounded-l-lg shadow-lg cursor-pointer 
                        transition-all duration-300 flex items-center justify-end 
                        hover:translate-x-2 hover:shadow-lg group`}

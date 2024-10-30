@@ -43,7 +43,7 @@ export default function HomeMagazineSection() {
     }
 
     return (
-        <section className="py-12 px-4 bg-gradient-to-b from-amber-50 to-white">
+        <section id="magazine-section" className="py-12 px-4 bg-gradient-to-b from-amber-50 to-white">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-12">
                     <div className="flex items-center justify-center gap-3 mb-2">
