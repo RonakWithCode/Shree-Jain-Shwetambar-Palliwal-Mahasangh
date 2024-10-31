@@ -112,7 +112,7 @@ export default function PhotoGallery() {
             </motion.div>
           </div>
           <h1 className="text-5xl font-bold mb-3 font-hindi bg-gradient-to-r from-orange-600 via-orange-500 to-orange-400 
-            text-transparent bg-clip-text relative z-10">
+            text-transparent bg-clip-text relative pt-10">
             फोटो गैलरी
           </h1>
           <div className="w-32 h-1 bg-gradient-to-r from-orange-600 to-orange-400 mx-auto rounded-full" />

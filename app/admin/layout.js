@@ -23,9 +23,8 @@ import { logout } from '@/lib/auth-service';
 const menuItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: FaTachometerAlt },
   { href: '/admin/news', label: 'News', icon: FaNewspaper },
-  { href: '/admin/new-updates', label: 'Updates', icon: FaUpload },
+  { href: '/admin/new-updates', label: 'New Updates', icon: FaUpload },
   { href: '/admin/magazines', label: 'Magazine management', icon: FaBook },
-  { href: '/admin/hero-slider', label: 'Hero Slider', icon: FaNewspaper },
   { href: '/admin/photo-gallery', label: 'Photo Gallery', icon: FaImages},
   { href: '/admin/contacts', label: 'Contacts', icon: FaUsers },
   { href: '/admin/application-forms', label: 'application forms', icon: FaUsers },

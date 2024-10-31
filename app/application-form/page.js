@@ -48,7 +48,7 @@ export default function ApplicationForms() {
         <div className="max-w-6xl mx-auto">
           {/* Enhanced Header with Gradient */}
           <div className="text-center mb-16">
-            <h1 className="text-5xl sm:text-6xl font-bold mb-6 font-hindi 
+            <h1 className="pt-10 text-5xl sm:text-6xl font-bold mb-6 font-hindi 
               bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent
               animate-fade-in-down">
               आवेदन प्रपत्र

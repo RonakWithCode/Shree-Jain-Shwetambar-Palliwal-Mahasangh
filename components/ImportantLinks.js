@@ -5,7 +5,7 @@ const ImportantLinks = () => {
     { 
       title: 'दान करें',
       icon: '💰',
-      slug: '/donate',
+      slug: '/donation',
       gradient: 'from-blue-500 to-blue-600'
     },
     { 
@@ -17,7 +17,7 @@ const ImportantLinks = () => {
     { 
       title: 'हमसे संपर्क करें',
       icon: '📞',
-      slug: '/contact-us',
+      slug: '/contact',
       gradient: 'from-yellow-500 to-yellow-600'
     },
 

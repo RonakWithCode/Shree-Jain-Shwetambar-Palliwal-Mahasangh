@@ -11,13 +11,14 @@ const navItems = [
     href: '/acharyadev', 
     label: 'श्री जोधराज दीवान',
     subItems: [
-      { href: '/acharyadev/mahaveer', label: 'चरम तीर्थेश भगवान महावीर' },
+      { href: '/acharyadev/mahaveer', label: 'जोधराज दीवान जीवन परिचय।' },
     ]
   },
   { 
     href: '/sangh', 
     label: 'महासंघ',
     subItems: [
+      
       { href: '/sangh/parichay', label: 'महासंघ परिचय' },
       { href: '/sangh/parichay', label: 'महासंघ उद्देश्य' },
       { href: '/sangh/parichay', label: 'पूर्व अध्यक्ष गण' },
@@ -28,7 +29,7 @@ const navItems = [
     ]
   },
   { href: '/photo-gallery', label: 'फोटो गैलरी' },
-  // { href: '/sangh-gatividhi', label: 'संघ गतिविधि' },
+  { href: '/federation-activity', label: 'महासंघ गतिविधि' },
   { href: '/application-form', label: 'आवेदन प्रपत्र' },
   { href: '/donation', label: 'अर्थ सहयोग' },
   { href: '/contact', label: 'संपर्क' },

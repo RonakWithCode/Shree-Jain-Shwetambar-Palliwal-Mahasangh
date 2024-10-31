@@ -20,7 +20,7 @@ export default function ArthSahyog() {
         <div className="container mx-auto px-4 relative">
           {/* Page Title with Animation */}
           <div className="text-center mb-16 animate-fade-in-down">
-            <h1 className="text-4xl md:text-6xl font-bold font-hindi text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 mb-6">
+            <h1 className="pt-10 text-4xl md:text-6xl font-bold font-hindi text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500 mb-6">
               अर्थ सहयोग
             </h1>
             <div className="flex items-center justify-center gap-3">
