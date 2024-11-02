@@ -1,134 +1,181 @@
 "use client";
 import { useState, useEffect, useCallback, memo } from 'react';
 import Image from "next/image";
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaChevronLeft, FaChevronRight, FaPause, FaPlay } from 'react-icons/fa';
 
 const slides = [
   {
     image: '/images/jain-logo.jpg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'महासंघ द्वारा संचालित प्रवृत्तियां',
-    description: 'श्री अ.भा.सा.जैन महासंघ के साथ महिला व युवा महासंघ के माध्यम से...'
+    description: 'श्री अ.भा.सा.जैन महासंघ के साथ महिला व युवा महासंघ के माध्यम से...',
+    gradient: 'from-orange-600 to-red-600'
   },
   {
     image: '/images/sadhrmik.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'धार्मिक शिक्षा कार्यक्रम',
-    description: 'साधर्मिक का स्वाबलम्बन हेतु 50000 रु. का सशि का ऋण प्रदान करना ( बिना बयाज, पुनर्भरण 6 माह बाद 2500 रु, 20 मासिक किश्तों में )'
+    description: 'साधर्मिक का स्वाबलम्बन हेतु 50000 रु. का सशि का ऋण प्रदान करना ( बिना बयाज, पुनर्भरण 6 माह बाद 2500 रु, 20 मासिक किश्तों में )',
+    gradient: 'from-green-600 to-teal-600'
   },
   {
     image: '/images/serve.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'सामाजिक सेवा गतिविधियाँ',
-    description: 'असहाय साधर्मिक भाई बहिनों को भरण पोषण हेतु 1000 रु. प्रति माह सहायता करना।'
+    description: 'असहाय साधर्मिक भाई बहिनों को भरण पोषण हेतु 1000 रु. प्रति माह सहायता करना।',
+    gradient: 'from-blue-600 to-indigo-600'
   },
   {
     image: '/images/serve.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'आध्यात्मिक प्रशिक्षण',
-    description: 'पल्लीवाल संदेश मासिक पत्रिका के प्रकाशन द्वारा धार्मिक एवं सामाजिक गतिविधियों का प्रचार प्रसार करना।'
+    description: 'पल्लीवाल संदेश मासिक पत्रिका के प्रकाशन द्वारा धार्मिक एवं सामाजिक गतिविधियों का प्रचार प्रसार करना।',
+    gradient: 'from-purple-600 to-pink-600'
   },
   {
     image: '/images/serve.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'सामाजिक सेवा',
-    description: 'पल्लीवाल शिरोमणि श्री जोधराज दीवान छात्रवृत्ति योजना में 12वीं कक्षा उत्तीर्ण को 12000 रु. की एक मुश्त छात्रदृति दी जा रही है।'
+    description: 'पल्लीवाल शिरोमणि श्री जोधराज दीवान छात्रवृत्ति योजना में 12वीं क्षा उत्तीर्ण को 12000 रु. की एक मुश्त छात्रदृति दी जा रही है।',
+    gradient: 'from-yellow-600 to-amber-600'
   },
   {
     image: '/images/serve.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'संघ द्वारा सचालित प्रवृत्तियां',
-    description: 'सिरस तीर्थ पर भूखणद क्रय व चारदिवारी निर्माण योजना'
+    description: 'सिरस तीर्थ पर भूखणद क्रय व चारदिवारी निर्माण योजना',
+    gradient: 'from-cyan-600 to-teal-600'
   },
   {
     image: '/images/tirth.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'सामाजिक सेवा गतिविधियाँ',
-    description: 'पल्लीवाल जैन समाज के अच्छे पैकेज पर काम कर रहें बच्चों का डाटा कलेक्शन का कार्य किया जा रहा हैं।'
+    description: 'पल्लीवाल जैन समाज के अच्छे पैकेज पर काम कर रहें बच्चों का डाटा कलेक्शन का कार्य किया जा रहा हैं।',
+    gradient: 'from-pink-600 to-rose-600'
   }
 ];
 
-const NavButton = memo(({ onClick, icon: Icon, direction }) => (
-  <button
+const NavButton = memo(({ onClick, icon: Icon, direction, disabled }) => (
+  <motion.button
+    whileHover={{ scale: 1.1 }}
+    whileTap={{ scale: 0.9 }}
     onClick={onClick}
-    className="p-2 rounded-full bg-white/90 shadow-lg hover:shadow-xl 
-      transform hover:scale-105 active:scale-95
-      transition-all duration-300 ease-out"
-    aria-label={`${direction} slide`}
+    disabled={disabled}
+    className={`p-3 rounded-full bg-white/90 shadow-lg backdrop-blur-sm
+      transition-all duration-300 
+      ${disabled ? 'opacity-50' : 'hover:shadow-xl hover:bg-orange-50'}`}
   >
-    <Icon className="text-orange-500 transition-colors duration-300" />
-  </button>
+    <Icon className={`text-xl ${disabled ? 'text-gray-400' : 'text-orange-500'}`} />
+  </motion.button>
 ));
 
 const SlideIndicator = memo(({ isActive, onClick }) => (
-  <button
+  <motion.button
+    whileHover={{ scale: 1.2 }}
+    whileTap={{ scale: 0.9 }}
     onClick={onClick}
-    className={`transform transition-all duration-300 ease-out rounded-full
-      hover:scale-110 active:scale-95
-      ${isActive 
-        ? 'w-8 h-2 bg-orange-500 shadow-lg' 
-        : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'}`}
-    aria-label={`Go to slide ${isActive ? '(current)' : ''}`}
-  />
+    className={`relative transition-all duration-300 rounded-full overflow-hidden
+      ${isActive ? 'w-8 h-2' : 'w-2 h-2'}`}
+  >
+    <motion.div
+      layoutId="indicator"
+      className={`h-full w-full ${isActive ? 'bg-orange-500' : 'bg-gray-300'}`}
+    />
+  </motion.button>
 ));
 
 const SlideImage = memo(({ src, alt, blurDataURL }) => (
-  <div className="relative aspect-[4/3] rounded-xl overflow-hidden bg-orange-50
-    transform transition-transform duration-500 ease-out hover:scale-[1.02]">
+  <motion.div
+    initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
+    exit={{ opacity: 0, scale: 0.95 }}
+    transition={{ duration: 0.5 }}
+    className="relative aspect-[3/4] xs:aspect-[4/3] sm:aspect-[16/9] lg:aspect-[4/3]
+      rounded-lg sm:rounded-xl overflow-hidden bg-orange-50 group
+      w-full max-w-[95vw] xs:max-w-[85vw] sm:max-w-[75vw] lg:max-w-none mx-auto"
+  >
     <Image
       src={src}
       alt={alt}
       fill
       priority
-      sizes="(max-width: 768px) 100vw, 50vw"
-      className="object-fill transform transition-transform duration-700 ease-out
-        group-hover:scale-110"
+      sizes="(max-width: 480px) 95vw, 
+             (max-width: 640px) 85vw,
+             (max-width: 768px) 75vw,
+             (max-width: 1024px) 50vw,
+             40vw"
+      className="object-cover transition-transform duration-700 
+        group-hover:scale-110 group-hover:rotate-1"
       loading="eager"
       placeholder="blur"
       blurDataURL={blurDataURL}
-      quality={90}
+      quality={85}
     />
-    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent 
-      opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-  </div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileHover={{ opacity: 1 }}
+      className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent"
+    />
+  </motion.div>
 ));
 
 const ProgressBar = memo(({ isPlaying }) => (
   <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
-    <div 
-      className={`h-full bg-gradient-to-r from-orange-500 to-red-500
-        transform origin-left transition-transform ease-linear
-        ${isPlaying ? 'duration-[5000ms] scale-x-100' : 'scale-x-0 duration-300'}`}
+    <motion.div 
+      initial={{ scaleX: 0 }}
+      animate={{ scaleX: isPlaying ? 1 : 0 }}
+      transition={{ duration: 5, ease: "linear", repeat: isPlaying ? Infinity : 0 }}
+      className="h-full bg-gradient-to-r from-orange-500 to-red-500 origin-left"
     />
   </div>
 ));
 
-const TextContent = memo(({ title, description }) => (
-  <div className="space-y-4 transform transition-all duration-500 ease-out">
-    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-hindi
-      bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent
-      animate-gradient hover:scale-[1.01] transition-transform duration-300">
+const TextContent = memo(({ title, description, gradient }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    className="space-y-3 sm:space-y-4 lg:space-y-6 px-4 sm:px-6 lg:px-0 text-center lg:text-left"
+  >
+    <motion.h2
+      layoutId="title"
+      className={`text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl 
+        font-bold font-hindi bg-gradient-to-r ${gradient} 
+        bg-clip-text text-transparent
+        leading-[1.6] xs:leading-[1.7] sm:leading-[1.8] 
+        tracking-normal
+        py-1 sm:py-2
+        max-w-[95vw] xs:max-w-[85vw] sm:max-w-[75vw] lg:max-w-xl mx-auto lg:mx-0`}
+    >
       {title}
-    </h2>
-    <p className="text-base sm:text-lg text-gray-600 font-hindi leading-relaxed
-      transform hover:scale-[1.01] transition-transform duration-300">
+    </motion.h2>
+    <motion.p
+      layoutId="description"
+      className="text-xs xs:text-sm sm:text-base lg:text-lg text-gray-600 
+        font-hindi leading-[1.8] xs:leading-[1.9] sm:leading-[2]
+        tracking-normal
+        max-w-[95vw] xs:max-w-[85vw] sm:max-w-[75vw] lg:max-w-xl mx-auto lg:mx-0"
+    >
       {description}
-    </p>
-  </div>
+    </motion.p>
+  </motion.div>
 ));
 
 const HeroSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [direction, setDirection] = useState(0);
 
   const handleSlideChange = useCallback((newIndex) => {
     if (isTransitioning) return;
     setIsTransitioning(true);
+    setDirection(newIndex > currentSlide ? 1 : -1);
     setCurrentSlide(newIndex);
     setIsAutoPlaying(false);
     setTimeout(() => setIsTransitioning(false), 500);
-  }, [isTransitioning]);
+  }, [currentSlide, isTransitioning]);
 
   const nextSlide = useCallback(() => {
     if (isTransitioning) return;
@@ -157,65 +204,124 @@ const HeroSection = () => {
   }, [isAutoPlaying]);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-orange-50/30 to-white">
-      <div className="container mx-auto px-4 py-8 sm:py-16">
-        <div className="flex flex-col lg:flex-row items-center gap-8
-          transform transition-all duration-500 ease-out">
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="relative overflow-hidden bg-gradient-to-b from-orange-50/30 to-white
+        min-h-[80vh] w-full py-4 sm:py-6 lg:py-12"
+    >
+      <div className="container mx-auto px-2 xs:px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row items-center justify-center 
+          gap-4 xs:gap-6 sm:gap-8 lg:gap-12 h-full w-full max-w-7xl mx-auto">
+          
           {/* Image Section */}
-          <div className="w-full lg:w-1/2 group">
-            <div className="bg-white p-2 rounded-xl shadow-lg hover:shadow-xl
-              transform transition-all duration-500 ease-out hover:scale-[1.01]">
-              <SlideImage
-                src={slides[currentSlide].image}
-                alt={slides[currentSlide].title}
-                blurDataURL={slides[currentSlide].blurDataURL}
-              />
-            </div>
-          </div>
+          <motion.div 
+            className="w-full lg:w-1/2"
+            layoutId="slideContainer"
+          >
+            <AnimatePresence mode="wait">
+              <div className="bg-white p-1 xs:p-2 sm:p-3 rounded-lg sm:rounded-xl 
+                shadow-lg hover:shadow-xl transform transition-all duration-500 
+                hover:scale-[1.01]">
+                <SlideImage
+                  key={currentSlide}
+                  src={slides[currentSlide].image}
+                  alt={slides[currentSlide].title}
+                  blurDataURL={slides[currentSlide].blurDataURL}
+                />
+              </div>
+            </AnimatePresence>
+          </motion.div>
 
           {/* Text Content */}
-          <div className="w-full lg:w-1/2 lg:pl-8 space-y-6
-            transform transition-all duration-500 ease-out">
+          <motion.div 
+            className="w-full lg:w-1/2 lg:pl-8 space-y-3  xs:space-y-4 sm:space-y-6 lg:space-y-8"
+            layoutId="textContainer"
+          >
             {/* Slide Counter */}
-            <div className="flex items-center space-x-4">
-              <span className="text-4xl font-bold text-orange-500
-                transform transition-all duration-300 hover:scale-110">
+            <motion.div 
+              className="flex items-center space-x-4 px-4 sm:px-6 lg:px-0
+                max-w-[95vw] xs:max-w-[85vw] sm:max-w-[75vw] lg:max-w-xl mx-auto lg:mx-0"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <motion.span
+                key={currentSlide}
+                className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-bold text-orange-500"
+              >
                 {String(currentSlide + 1).padStart(2, '0')}
-              </span>
+              </motion.span>
               <div className="flex-1 h-0.5 bg-gradient-to-r from-orange-500 to-transparent" />
               <span className="text-gray-400">
                 {String(slides.length).padStart(2, '0')}
               </span>
-            </div>
+            </motion.div>
 
-            <TextContent 
-              title={slides[currentSlide].title}
-              description={slides[currentSlide].description}
-            />
-
-            <ProgressBar isPlaying={isAutoPlaying} />
-          </div>
-        </div>
-
-        {/* Navigation Controls */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center space-x-4
-          transform transition-all duration-500 ease-out hover:scale-105">
-          <NavButton onClick={prevSlide} icon={FaChevronLeft} direction="previous" />
-          
-          <div className="flex space-x-2">
-            {slides.map((_, index) => (
-              <SlideIndicator
-                key={index}
-                isActive={index === currentSlide}
-                onClick={() => handleSlideChange(index)}
+            <AnimatePresence mode="wait">
+              <TextContent 
+                key={currentSlide}
+                {...slides[currentSlide]}
               />
-            ))}
-          </div>
+            </AnimatePresence>
 
-          <NavButton onClick={nextSlide} icon={FaChevronRight} direction="next" />
+            {/* Controls */}
+            <div className="w-full flex flex-col items-center mt-8 sm:mt-12">
+              {/* Progress and Play Controls */}
+              <div className="flex items-center justify-center space-x-4 mb-4 sm:mb-6
+                w-full max-w-[95vw] xs:max-w-[85vw] sm:max-w-[75vw] lg:max-w-xl">
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                  className="p-2 rounded-full hover:bg-orange-50 text-orange-500
+                    bg-white/80 backdrop-blur-sm shadow-md"
+                >
+                  {isAutoPlaying ? <FaPause /> : <FaPlay />}
+                </motion.button>
+                <div className="flex-1">
+                  <ProgressBar isPlaying={isAutoPlaying} />
+                </div>
+              </div>
+
+              {/* Navigation Controls */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center justify-center 
+                  space-x-2 xs:space-x-3 sm:space-x-4 
+                  bg-white/80 backdrop-blur-sm rounded-full 
+                  py-2 px-3 shadow-lg mx-auto
+                  w-auto"
+              >
+                <NavButton 
+                  onClick={prevSlide} 
+                  icon={FaChevronLeft} 
+                  direction="previous"
+                  disabled={isTransitioning}
+                />
+                
+                <div className="flex space-x-1 xs:space-x-2">
+                  {slides.map((_, index) => (
+                    <SlideIndicator
+                      key={index}
+                      isActive={index === currentSlide}
+                      onClick={() => handleSlideChange(index)}
+                    />
+                  ))}
+                </div>
+
+                <NavButton 
+                  onClick={nextSlide} 
+                  icon={FaChevronRight} 
+                  direction="next"
+                  disabled={isTransitioning}
+                />
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

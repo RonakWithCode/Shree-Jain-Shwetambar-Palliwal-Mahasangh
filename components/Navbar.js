@@ -1,3 +1,4 @@
+
 "use client";
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
@@ -23,7 +24,7 @@ const navItems = [
     subItems: [
       { href: '/sangh/parichay', label: 'महासंघ परिचय' },
       { href: '/federation-purpose', label: 'महासंघ उद्देश्य' },
-      { href: '/sangh/parichay', label: 'पूर्व अध्यक्ष गण' },
+      { href: '/former-president', label: 'पूर्व अध्यक्ष गण' },
       { href: '/current-executive', label: 'वर्तमान कार्यकारिणी' },
       { href: '/magazine-officer', label: 'पत्रिका पदाधिकारी' },
       { href: '/sangh/a', label: 'महासंघ की शाखाएं' },

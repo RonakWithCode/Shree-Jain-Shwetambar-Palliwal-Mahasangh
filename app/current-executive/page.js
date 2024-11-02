@@ -219,7 +219,7 @@ export default function CurrentExecutive() {
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0 bg-gradient-to-br from-white via-transparent to-black"></div>
               </div>
-              
+
               <div className="relative p-8">
                 {/* Image Section */}
                 <div className="flex justify-center mb-6">
@@ -227,7 +227,8 @@ export default function CurrentExecutive() {
                     <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur"></div>
                     <div className="relative">
                       <Image
-                        src={`/images/executives/${executive.name.replace(/\s+/g, '-').toLowerCase()}.jpg`}
+                        src="/images/Profile_avatar_placeholder_large.png"
+                        // src={`/images/executives/${executive.name.replace(/\s+/g, '-').toLowerCase()}.jpg`}
                         alt={executive.name}
                         width={128}
                         height={128}
@@ -276,7 +277,7 @@ export default function CurrentExecutive() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {members.map((member, index) => (
-              <div key={index} 
+              <div key={index}
                 className={`${member.bgColor} p-6 rounded-xl shadow-sm hover:shadow-md 
                   transition-all duration-300 border-l-4 ${member.borderColor}`}
               >
@@ -310,7 +311,7 @@ export default function CurrentExecutive() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {nominatedMembers.map((member, index) => (
-              <div key={index} 
+              <div key={index}
                 className={`${member.bgColor} p-6 rounded-xl shadow-sm hover:shadow-md 
                   transition-all duration-300 border-l-4 ${member.borderColor}`}
               >
@@ -340,4 +341,3 @@ export default function CurrentExecutive() {
     </div>
   );
 }
- 
