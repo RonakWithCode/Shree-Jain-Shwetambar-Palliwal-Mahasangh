@@ -8,17 +8,20 @@ import {
   APPLICATION_FORM_BUCKET_ID,
   DATABASE_ID,
   ID,
-  Query 
+  Query,
+  FORM_CATEGORIES,
+  CATEGORY_LABELS 
 } from '@/lib/appwrite';
 import { toast } from 'react-hot-toast';
 
 export default function ApplicationForms() {
-  const [forms, setForms] = useState([]);
+  const [forms, setForms] = useState({});
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     isActive: true,
+    category: FORM_CATEGORIES.OTHER,
     file: null
   });
 
@@ -34,7 +37,18 @@ export default function ApplicationForms() {
         APPLICATION_FORM_COLLECTION_ID,
         [Query.orderDesc('$createdAt')]
       );
-      setForms(response.documents);
+      
+      // Group forms by category
+      const groupedForms = response.documents.reduce((acc, form) => {
+        const category = form.category || FORM_CATEGORIES.OTHER;
+        if (!acc[category]) {
+          acc[category] = [];
+        }
+        acc[category].push(form);
+        return acc;
+      }, {});
+      
+      setForms(groupedForms);
     } catch (error) {
       console.error('Error fetching forms:', error);
       toast.error('Failed to fetch forms');
@@ -46,31 +60,24 @@ export default function ApplicationForms() {
     setUploading(true);
 
     try {
-      // Generate timestamp
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
       const fileExtension = formData.file.name.split('.').pop();
       const newFileName = `${formData.title}-${timestamp}.${fileExtension}`;
 
-      // Create file with custom name
       const fileBlob = new Blob([formData.file], { type: formData.file.type });
       const newFile = new File([fileBlob], newFileName, { type: formData.file.type });
 
-      // 1. Upload file to storage with timestamp name
       const fileUpload = await storage.createFile(
         APPLICATION_FORM_BUCKET_ID,
         ID.unique(),
         newFile
       );
 
-      // 2. Generate preview and download URLs
-  
-
       const downloadUrl = storage.getFileView(
         APPLICATION_FORM_BUCKET_ID,
         fileUpload.$id
       );
 
-      // 3. Create database entry with URLs
       await databases.createDocument(
         DATABASE_ID,
         APPLICATION_FORM_COLLECTION_ID,
@@ -78,6 +85,7 @@ export default function ApplicationForms() {
         {
           title: formData.title,
           isActive: formData.isActive,
+          category: formData.category,
           fileId: fileUpload.$id,
           fileName: newFileName,
           fileSize: newFile.size,
@@ -88,8 +96,7 @@ export default function ApplicationForms() {
         }
       );
 
-      // Reset form and refresh list
-      setFormData({ title: '', isActive: true, file: null });
+      setFormData({ title: '', isActive: true, category: FORM_CATEGORIES.OTHER, file: null });
       toast.success('Form uploaded successfully');
       fetchForms();
     } catch (error) {
@@ -156,6 +163,20 @@ export default function ApplicationForms() {
           </div>
 
           <div>
+            <label className="block text-sm font-medium text-gray-700">Category</label>
+            <select
+              value={formData.category}
+              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              required
+            >
+              {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
+                <option key={value} value={value}>{label}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
             <label className="block text-sm font-medium text-gray-700">Form File (PDF/Image)</label>
             <input
               type="file"
@@ -187,88 +208,94 @@ export default function ApplicationForms() {
         </form>
       </div>
 
-      {/* Forms List */}
-      <div className="bg-white rounded-lg shadow-md">
-        <h2 className="text-xl font-semibold p-6 border-b">Uploaded Forms</h2>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preview</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Download</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {forms.map((form) => (
-                <tr key={form.$id}>
-                  <td className="px-6 py-4 whitespace-nowrap">{form.title}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <button
-                      onClick={() => toggleFormStatus(form)}
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        form.isActive 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-red-100 text-red-800'
-                      }`}
-                    >
-                      {form.isActive ? 'Active' : 'Inactive'}
-                    </button>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <a
-                      href={storage.getFilePreview(
-                        APPLICATION_FORM_BUCKET_ID,
-                        form.fileId,
-                        {
-                          width: 400,
-                          height: 600,
-                          gravity: 'center',
-                          quality: 100,
-                          output: 'jpg'  // or 'png'
-                        }
-                      )}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800 flex items-center"
-                    >
-                      <svg
-                        className="w-4 h-4 mr-1"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                        />
-                      </svg>
-                      Preview
-                    </a>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <button
-                      onClick={() => deleteForm(form)}
-                      className="text-red-600 hover:text-red-800"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* Forms List by Category */}
+      <div className="space-y-8">
+        {Object.entries(CATEGORY_LABELS).map(([category, label]) => (
+          <div key={category} className="bg-white rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold p-6 border-b bg-gray-50">
+              {label}
+              {forms[category] && (
+                <span className="ml-2 text-sm text-gray-500">
+                  ({forms[category].length})
+                </span>
+              )}
+            </h2>
+            <div className="overflow-x-auto">
+              {forms[category] && forms[category].length > 0 ? (
+                <table className="min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Download</th>
+                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {forms[category].map((form) => (
+                      <tr key={form.$id}>
+                        <td className="px-6 py-4 whitespace-nowrap">{form.title}</td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <button
+                            onClick={() => toggleFormStatus(form)}
+                            className={`px-2 py-1 rounded-full text-xs font-medium ${
+                              form.isActive 
+                                ? 'bg-green-100 text-green-800' 
+                                : 'bg-red-100 text-red-800'
+                            }`}
+                          >
+                            {form.isActive ? 'Active' : 'Inactive'}
+                          </button>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <a
+                            href={form.downloadUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:text-blue-800 flex items-center"
+                          >
+                            <svg
+                              className="w-4 h-4 mr-1"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                              />
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                              />
+                            </svg>
+                            download
+                          </a>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <button
+                            onClick={() => deleteForm(form)}
+                            className="text-red-600 hover:text-red-800"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <div className="p-6 text-center text-gray-500">
+                  No forms in this category
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

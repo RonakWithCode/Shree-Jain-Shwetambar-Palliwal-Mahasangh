@@ -31,12 +31,10 @@ const AhimsaHand = () => (
 );
 
 const footerLinks = [
-  // { href: '/about', label: 'हमारे बारे में', labelEn: 'About Us' },
   { href: '/contact', label: 'संपर्क करें', labelEn: 'Contact' },
   { href: '/current-executive', label: 'वर्तमान कार्यकारिणी', labelEn: 'Contact' },
   { href: '/magazine-officer', label: 'पत्रिका अधिकारी', labelEn: 'Contact' },
-  // { href: '/privacy', label: 'गोपनीयता नीति', labelEn: 'Privacy Policy' },
-  // { href: '/terms', label: 'नियम और शर्तें', labelEn: 'Terms and Conditions' },
+  // { href: 'https://www.ronosoft.com', label: 'हमारी एजेंसी', labelEn: 'Our Agency' }, // Link to Ronosoft
 ];
 
 export default function Footer() {
@@ -44,7 +42,7 @@ export default function Footer() {
     <footer className="relative bg-gradient-to-b from-orange-50 via-white to-orange-100 text-gray-800">
       {/* Decorative Top Border */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-300 via-yellow-500 to-orange-300" />
-      
+
       {/* Background Pattern with SVG */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96">
@@ -62,7 +60,6 @@ export default function Footer() {
               </div>
               <h3 className="text-2xl font-bold text-orange-800">श्री जैन श्वेतांबर पल्लीवाल महासंघ</h3>
             </div>
-        
           </div>
 
           {/* Quick Links */}
@@ -77,6 +74,7 @@ export default function Footer() {
                   <Link 
                     href={link.href} 
                     className="text-orange-700 hover:text-orange-500 transition-colors flex items-center group"
+                    target={link.href.includes('http') ? '_blank' : '_self'} // Opens external link in a new tab
                   >
                     <span className="w-0 group-hover:w-4 h-0.5 bg-orange-400 mr-0 group-hover:mr-2 transition-all duration-300"></span>
                     <span>{link.label}</span>
@@ -98,39 +96,36 @@ export default function Footer() {
                 श्री जैन श्वेतांबर पल्लीवाल महासंघ मंदिर के पास
               </p>
               <p className="flex items-center">
-                <FaPhone className="text-orange-500 mr-3" />
-                +91 98765 43210
+                <FaPhone className="text-orange-500 rotate-90 mr-3" />
+                +91 9413304075
               </p>
               <p className="flex items-center">
                 <FaEnvelope className="text-orange-500 mr-3" />
-                contact@jainsamaj.org
+                palliwalmahasangh@gmail.com
               </p>
             </address>
           </div>
 
-          {/* Newsletter */}
-          {/* <div>
+          {/* Developed by Ronosoft */}
+          <div>
             <h4 className="text-xl font-semibold mb-6 text-orange-800 flex items-center justify-center md:justify-start">
               <span className="w-8 h-0.5 bg-orange-400 mr-3"></span>
-              समाचार पत्र
+              विकसित किया गया
             </h4>
-            <form className="space-y-4">
-              <input
-                type="email"
-                placeholder="आपका ईमेल"
-                className="w-full px-4 py-2 bg-white/80 border-2 border-orange-200 rounded-lg focus:outline-none focus:border-orange-400 text-orange-900"
-              />
-              <button
-                type="submit"
-                className="w-full px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-500 transition-colors"
-              >
-                सदस्यता लें
-              </button>
-            </form>
-          </div> */}
+            <p className="text-orange-700">
+              यह वेबसाइट Ronosoft द्वारा विकसित की गई है।
+            </p>
+            <Link 
+              href="https://www.ronosoft.com" 
+              className="text-orange-700 hover:text-orange-500 transition-colors mt-2 inline-block"
+              target="_blank" // Opens external link in a new tab
+            >
+              हमारी वेबसाइट पर जाएं
+            </Link>
+          </div>
         </div>
 
-        {/* Bottom Bar - Simplified */}
+        {/* Bottom Bar */}
         <div className="mt-8 pt-4 border-t border-orange-200 text-center">
           <div className="flex items-center justify-center mb-2">
             <div className="w-8 h-8 text-orange-600">
