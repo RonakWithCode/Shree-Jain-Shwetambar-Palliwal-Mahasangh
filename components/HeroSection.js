@@ -93,7 +93,7 @@ const SlideImage = memo(({ src, alt, blurDataURL }) => (
     transition={{ duration: 0.5 }}
     className="relative aspect-[3/4] xs:aspect-[4/3] sm:aspect-[16/9] lg:aspect-[4/3]
       rounded-lg sm:rounded-xl overflow-hidden bg-orange-50 group
-      w-full max-w-[95vw] xs:max-w-[85vw] sm:max-w-[75vw] lg:max-w-none mx-auto"
+      w-full max-w-[65vw] xs:max-w-[65vw] sm:max-w-[75vw] lg:max-w-none mx-auto"
   >
     <Image
       src={src}
@@ -208,11 +208,11 @@ const HeroSection = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       className="relative overflow-hidden bg-gradient-to-b from-orange-50/30 to-white
-        min-h-[80vh] w-full py-4 sm:py-6 lg:py-12"
+        min-h-[70vh] w-full py-4 sm:py-6"
     >
       <div className="container mx-auto px-2 xs:px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-center justify-center 
-          gap-4 xs:gap-6 sm:gap-8 lg:gap-12 h-full w-full max-w-7xl mx-auto">
+          gap-4 xs:gap-6 sm:gap-8 lg:gap-10 h-full w-full max-w-7xl mx-auto">
           
           {/* Image Section */}
           <motion.div 
@@ -235,7 +235,7 @@ const HeroSection = () => {
 
           {/* Text Content */}
           <motion.div 
-            className="w-full lg:w-1/2 lg:pl-8 space-y-3  xs:space-y-4 sm:space-y-6 lg:space-y-8"
+            className="w-full lg:w-1/2 lg:pl-8 space-y-3 xs:space-y-4 sm:space-y-5"
             layoutId="textContainer"
           >
             {/* Slide Counter */}
@@ -265,9 +265,9 @@ const HeroSection = () => {
             </AnimatePresence>
 
             {/* Controls */}
-            <div className="w-full flex flex-col items-center mt-8 sm:mt-12">
+            <div className="w-full flex flex-col items-center mt-6 sm:mt-8">
               {/* Progress and Play Controls */}
-              <div className="flex items-center justify-center space-x-4 mb-4 sm:mb-6
+              <div className="flex items-center justify-center space-x-4 mb-3 sm:mb-4
                 w-full max-w-[95vw] xs:max-w-[85vw] sm:max-w-[75vw] lg:max-w-xl">
                 <motion.button
                   whileHover={{ scale: 1.1 }}

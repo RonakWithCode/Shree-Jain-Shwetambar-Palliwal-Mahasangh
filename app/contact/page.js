@@ -12,12 +12,12 @@ const MapWithNoSSR = dynamic(
 );
 
 const LOCATION = {
-  lat: 26.9124,
-  lng: 75.7873,
+  lat: 27.5530,
+  lng: 76.6346,
   address: "श्री दिगम्बर जैन मंदिर, जयपुर",
-  phone: "+91 9876543210",
-  email: "contact@example.com"
-};
+  phone: "+91 9413304075",
+  email: "palliwalmahasangh@gmail.com"
+}; 
 
 const Contact = () => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm();
