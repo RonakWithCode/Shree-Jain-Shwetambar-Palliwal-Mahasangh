@@ -1,4 +1,3 @@
-
 "use client";
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
@@ -47,6 +46,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [mobileDropdown, setMobileDropdown] = useState(null);
   const [scrolled, setScrolled] = useState(false);
 
   // Optimize scroll handling
@@ -66,10 +66,15 @@ export default function Navbar() {
   const handleLinkClick = useCallback((href) => {
     setIsOpen(false);
     setActiveDropdown(null);
+    setMobileDropdown(null);
   }, []);
 
-  const toggleDropdown = useCallback((href) => {
+  const toggleDesktopDropdown = useCallback((href) => {
     setActiveDropdown(prev => prev === href ? null : href);
+  }, []);
+
+  const toggleMobileDropdown = useCallback((href) => {
+    setMobileDropdown(prev => prev === href ? null : href);
   }, []);
 
   const isLinkActive = useCallback((href, subItems) => {
@@ -78,7 +83,7 @@ export default function Navbar() {
     return false;
   }, [pathname]);
 
-  // Close dropdown when clicking outside
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest('.nav-dropdown')) {
@@ -94,6 +99,7 @@ export default function Navbar() {
   useEffect(() => {
     setIsOpen(false);
     setActiveDropdown(null);
+    setMobileDropdown(null);
   }, [pathname]);
 
   return (
@@ -138,7 +144,7 @@ export default function Navbar() {
               <div key={item.href} className="relative nav-dropdown">
                 {item.subItems ? (
                   <button 
-                    onClick={() => toggleDropdown(item.href)}
+                    onClick={() => toggleDesktopDropdown(item.href)}
                     className={`px-3 py-2 rounded-lg font-hindi text-base flex items-center
                       hover:bg-orange-50 transition-colors duration-200
                       ${isLinkActive(item.href, item.subItems) ? 'text-orange-600' : 'text-gray-900'}`}
@@ -200,48 +206,55 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       <div className={`lg:hidden bg-white border-t shadow-lg overflow-hidden
-        transition-all duration-200 ${isOpen ? 'max-h-[calc(100vh-200px)]' : 'max-h-0'}`}>
-        <div className="px-4 py-2 space-y-1 overflow-y-auto">
+        transition-all duration-300 ease-in-out
+        ${isOpen ? 'max-h-[calc(100vh-200px)]' : 'max-h-0'}`}>
+        <div className="px-4 py-2 space-y-2">
           {navItems.map((item) => (
-            <div key={item.href}>
+            <div key={item.href} className="border-b border-gray-100 last:border-0">
               {item.subItems ? (
-                <button
-                  onClick={() => toggleDropdown(item.href)}
-                  className={`w-full text-left px-4 py-2.5 rounded-lg font-hindi text-base
-                    hover:bg-orange-50 transition-colors duration-200 flex items-center justify-between
-                    ${isLinkActive(item.href, item.subItems) ? 'text-orange-600' : 'text-gray-900'}`}
-                >
-                  {item.label}
-                  <DownArrow />
-                </button>
+                <>
+                  <button
+                    onClick={() => toggleMobileDropdown(item.href)}
+                    className={`w-full text-left px-4 py-3 font-hindi text-base
+                      flex items-center justify-between
+                      ${isLinkActive(item.href, item.subItems) ? 'text-orange-600' : 'text-gray-900'}`}
+                  >
+                    <span>{item.label}</span>
+                    <span className={`transform transition-transform duration-200
+                      ${mobileDropdown === item.href ? 'rotate-180' : ''}`}>
+                      <DownArrow />
+                    </span>
+                  </button>
+
+                  <div className={`overflow-hidden transition-all duration-200
+                    ${mobileDropdown === item.href ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                    <div className="pl-6 py-2 space-y-2 border-l-2 border-orange-500 ml-4 
+                      bg-orange-50/50 rounded-r-lg mt-1">
+                      {item.subItems.map((subItem) => (
+                        <Link
+                          key={subItem.href}
+                          href={subItem.href}
+                          onClick={() => handleLinkClick(subItem.href)}
+                          className={`block px-4 py-2 text-sm font-hindi
+                            hover:bg-orange-100 rounded-lg transition-colors duration-200
+                            ${pathname === subItem.href ? 'text-orange-600' : 'text-gray-900'}`}
+                        >
+                          {subItem.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </>
               ) : (
                 <Link
                   href={item.href}
                   onClick={() => handleLinkClick(item.href)}
-                  className={`block w-full px-4 py-2.5 rounded-lg font-hindi text-base
+                  className={`block w-full px-4 py-3 font-hindi text-base
                     hover:bg-orange-50 transition-colors duration-200
                     ${isLinkActive(item.href) ? 'text-orange-600' : 'text-gray-900'}`}
                 >
                   {item.label}
                 </Link>
-              )}
-
-              {/* Mobile Dropdown Items */}
-              {item.subItems && activeDropdown === item.href && (
-                <div className="pl-6 space-y-1 mt-1 border-l-2 border-orange-500 ml-4">
-                  {item.subItems.map((subItem) => (
-                    <Link
-                      key={subItem.href}
-                      href={subItem.href}
-                      onClick={() => handleLinkClick(subItem.href)}
-                      className={`block px-4 py-2 text-sm hover:bg-orange-50 font-hindi
-                        transition-colors duration-200
-                        ${pathname === subItem.href ? 'text-orange-600' : 'text-gray-900'}`}
-                    >
-                      {subItem.label}
-                    </Link>
-                  ))}
-                </div>
               )}
             </div>
           ))}
