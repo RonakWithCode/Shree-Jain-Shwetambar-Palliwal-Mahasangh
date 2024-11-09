@@ -157,8 +157,9 @@ module.exports = {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        hindi: ['Noto Sans Devanagari', ...fontFamily.sans],
-        
+        hindi: ['var(--font-hindi)'],
+        sans: ['var(--font-geist-sans)'],
+        mono: ['var(--font-geist-mono)'],
       },
     },
   },
