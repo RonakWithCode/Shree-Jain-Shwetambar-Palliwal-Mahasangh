@@ -9,14 +9,14 @@ const slides = [
     image: '/images/jain-logo.jpg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'महासंघ द्वारा संचालित प्रवृत्तियां',
-    description: 'श्री अ.भा.सा.जैन महासंघ के साथ महिला व युवा महासंघ के माध्यम से...',
+    description: 'श्महासंघ के साथ महिला व युवा महासंघ के माध्यम से...',
     gradient: 'from-orange-600 to-red-600'
   },
   {
     image: '/images/sadhrmik.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'धार्मिक शिक्षा कार्यक्रम',
-    description: 'साधर्मिक का स्वाबलम्बन हेतु 50000 रु. का सशि का ऋण प्रदान करना ( बिना बयाज, पुनर्भरण 6 माह बाद 2500 रु, 20 मासिक किश्तों में )',
+    description: 'साधर्मिक का स्वाबलम्बन हेतु 50000 रु. का ऋण प्रदान करना ( बिना पुनर्भरण 6 माह बाद 2500 रु, 20 मासिक किश्तों में )',
     gradient: 'from-green-600 to-teal-600'
   },
   {
@@ -37,13 +37,13 @@ const slides = [
     image: '/images/serve.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'सामाजिक सेवा',
-    description: 'पल्लीवाल शिरोमणि श्री जोधराज दीवान छात्रवृत्ति योजना में 12वीं क्षा उत्तीर्ण को 12000 रु. की एक मुश्त छात्रदृति दी जा रही है।',
+    description: 'पल्लीवाल शिरोमणि श्री जोधराज दीवान छात्रवृत्ति योजना में 12वीं उत्तीर्ण को 12000 रु. की एक मुश्त छात्र दी जा रही है।',
     gradient: 'from-yellow-600 to-amber-600'
   },
   {
     image: '/images/serve.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
-    title: 'संघ द्वारा सचालित प्रवृत्तियां',
+    title: ' द्वारा सचालित प्रवृत्तिया',
     description: 'सिरस तीर्थ पर भूखणद क्रय व चारदिवारी निर्माण योजना',
     gradient: 'from-cyan-600 to-teal-600'
   },

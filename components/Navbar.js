@@ -11,10 +11,10 @@ const LOGO_URL = "/images/jain-logo.jpg";
 const navItems = [
   { href: '/', label: 'मुखपृष्ठ' },
   { 
-    href: '/acharyadev', 
+    href: '/jodhraj-diwan-biography', 
     label: 'श्री जोधराज दीवान',
     subItems: [
-      { href: '/acharyadev/mahaveer', label: 'जोधराज दीवान जीवन परिचय।' },
+      { href: '/jodhraj-diwan-biography', label: 'जोधराज दीवान जीवन परिचय।' },
     ]
   },
   { 

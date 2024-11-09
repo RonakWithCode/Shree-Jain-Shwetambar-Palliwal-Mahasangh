@@ -1,30 +1,32 @@
 import Image from 'next/image';
-import { FaOm, FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
+import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
 
 const leaders = [
     {
         id: 1,
         name: 'श्री राजेन्द्र कुमार जैन',
         position: 'अध्यक्ष',
-        image: '/images/leaders/narendra-godhi.jpg'
+        image: '/images/leaders/Rajendra-Kumar-Jain.jpeg'
     },
     {
         id: 2,
         name: 'श्री मनोज कुमार जैन',
         position: 'महामंत्री',
-        image: '/images/leaders/suresh-bachhawat.jpg'
+        image: '/images/leaders/Manoj-Kumar-Jain.jpeg'
     },
     {
         id: 3,
         name: 'श्री विपिन कुमार जैन',
         position: 'कोषाध्यक्ष',
-        image: '/images/leaders/rajesh-bachhawat.jpg'
+        image: '/images/leaders/Vipin-Kumar-Jain.jpeg'
     },
 ];
 
 export default function CommunityLeaders() {
     return (
-        <div id='CommunityLeaders' className="py-24 relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-amber-50">
+        <section id='CommunityLeaders'>
+
+        <div id='CommunityLeaders' className="py-12 sm:py-16 md:py-24 relative overflow-hidden bg-gradient-to-b from-amber-50 via-white to-amber-50">
             {/* Decorative Background Pattern */}
             <div className="absolute inset-0 opacity-10">
                 <div className="absolute inset-0" style={{
@@ -35,74 +37,77 @@ export default function CommunityLeaders() {
                     backgroundSize: '30px 30px'
                 }} />
             </div>
-
             {/* Large Om Symbol Background */}
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-5">
-                <FaOm size={400} className="text-amber-800" />
+                {/* <FaOm size={300} className="text-amber-800" /> */}
+                <Image src="/images/jainlogo/Jainism.svg" alt="Jain Symbol" width={300} height={300} />
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
                 {/* Section Header */}
-                <div className="text-center mb-16">
+                <div className="text-center mb-8 sm:mb-12 md:mb-16">
                     <div className="flex justify-center items-center mb-4">
-                        <div className="w-16 h-px bg-amber-600"></div>
-                        <FaOm size={24} className="text-amber-600 mx-4" />
-                        <div className="w-16 h-px bg-amber-600"></div>
+                        <div className="w-12 sm:w-16 h-px bg-amber-600"></div>
+                        {/* <FaOm size={20} className="text-amber-600 mx-3 sm:mx-4" /> */}
+                        <Image src="/images/jainlogo/Jainism.svg" alt="Jain Symbol" width={50} height={50} />
+                        <div className="w-12 sm:w-16 h-px bg-amber-600"></div>
                     </div>
-                    <h2 className="text-4xl font-bold text-amber-800 mb-4">कार्यकारिणी समिति</h2>
+                    <h2 className="text-3xl sm:text-4xl font-bold text-amber-800 mb-4">वर्तमान कार्यकारिणी पदाधिकारी</h2>
                     <div className="flex justify-center items-center gap-2">
-                        <FaQuoteLeft className="text-amber-600" />
-                        <p className="text-lg text-gray-600">
+                        <FaQuoteLeft className="text-amber-600 text-sm sm:text-base" />
+                        <p className="text-base sm:text-lg text-gray-600">
                             श्वेताम्बर पल्लीवाल महासंघ जैन समाज सदस्य</p>
-                        <FaQuoteRight className="text-amber-600" />
+                        <FaQuoteRight className="text-amber-600 text-sm sm:text-base" />
                     </div>
                 </div>
 
                 {/* Leaders Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 justify-items-center">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 justify-items-center">
                     {leaders.map((leader) => (
                         <div
                             key={leader.id}
-                            className="flex flex-col items-center group"
+                            className="flex flex-col items-center group w-full max-w-sm"
                         >
                             {/* Image Container with enhanced decorative elements */}
-                            <div className="relative w-64 h-64 mb-6">
+                            <div className="relative w-full max-w-[400px] aspect-square mb-4 sm:mb-6">
                                 {/* Decorative Frame */}
                                 <div className="absolute inset-0 bg-amber-100 rounded-lg transform rotate-3 transition-transform group-hover:rotate-6"></div>
                                 <div className="absolute inset-0 bg-amber-50 rounded-lg -rotate-3 transition-transform group-hover:-rotate-6"></div>
 
                                 {/* Main Image Container */}
-                                <div className="relative bg-white rounded-lg shadow-xl overflow-hidden">
+                                <div className="relative w-full h-full bg-white rounded-lg shadow-xl overflow-hidden">
                                     <Image
                                         src={leader.image}
                                         alt={leader.name}
-                                        width={256}
-                                        height={256}
-                                        className="object-cover object-center transform transition-all duration-300 group-hover:scale-110"
+                                        width={400}
+                                        height={400}
+                                        className="object-contain object-center  w-full h-full transform transition-all duration-300 group-hover:scale-110"
+                                        priority
                                     />
                                     {/* Overlay on hover */}
                                     <div className="absolute inset-0 bg-gradient-to-t from-amber-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                 </div>
 
                                 {/* Decorative Corners */}
-                                <div className="absolute -top-3 -left-3 w-6 h-6 border-t-2 border-l-2 border-amber-600"></div>
-                                <div className="absolute -top-3 -right-3 w-6 h-6 border-t-2 border-r-2 border-amber-600"></div>
-                                <div className="absolute -bottom-3 -left-3 w-6 h-6 border-b-2 border-l-2 border-amber-600"></div>
-                                <div className="absolute -bottom-3 -right-3 w-6 h-6 border-b-2 border-r-2 border-amber-600"></div>
+                                <div className="absolute -top-2 -left-2 sm:-top-3 sm:-left-3 w-4 h-4 sm:w-6 sm:h-6 border-t-2 border-l-2 border-amber-600"></div>
+                                <div className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-4 h-4 sm:w-6 sm:h-6 border-t-2 border-r-2 border-amber-600"></div>
+                                <div className="absolute -bottom-2 -left-2 sm:-bottom-3 sm:-left-3 w-4 h-4 sm:w-6 sm:h-6 border-b-2 border-l-2 border-amber-600"></div>
+                                <div className="absolute -bottom-2 -right-2 sm:-bottom-3 sm:-right-3 w-4 h-4 sm:w-6 sm:h-6 border-b-2 border-r-2 border-amber-600"></div>
                             </div>
 
                             {/* Text Content with enhanced styling */}
                             <div className="text-center relative">
-                                <h3 className="text-xl font-bold text-amber-800 mb-2 relative">
+                                <h3 className="text-lg sm:text-xl font-bold text-amber-800 mb-2 relative">
                                     {leader.name}
                                     <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-amber-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                                 </h3>
-                                <div className="relative">
-                                    <p className="text-sm bg-amber-50 px-6 py-2 rounded-full border border-amber-200 shadow-sm">
+                                <div className="relative inline-block">
+                                    <p className="text-sm bg-amber-50 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full border border-amber-200 shadow-sm">
                                         {leader.position}
                                     </p>
-                                    <div className="absolute -right-2 -top-2">
-                                        <FaOm size={12} className="text-amber-600" />
+                                    <div className="absolute -right-1 -top-1 sm:-right-2 sm:-top-2">
+                                        {/* <FaOm size={10} className="text-amber-600" /> */}
+                                        <Image src="/images/jainlogo/Jainism.svg" alt="Jain Symbol" width={10} height={10} />
                                     </div>
                                 </div>
                             </div>
@@ -111,12 +116,16 @@ export default function CommunityLeaders() {
                 </div>
 
                 {/* Decorative Bottom Element */}
-                <div className="flex justify-center items-center mt-16">
-                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent"></div>
-                    <div className="w-16 h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent mx-2"></div>
-                    <div className="w-24 h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent"></div>
+                <div className="flex justify-center items-center mt-8 sm:mt-12 md:mt-16">
+                    <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent"></div>
+                    <div className="w-12 sm:w-16 h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent mx-2"></div>
+                    <div className="w-16 sm:w-24 h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent"></div>
                 </div>
             </div>
         </div>
+        </section>
+
     );
 }
+
+

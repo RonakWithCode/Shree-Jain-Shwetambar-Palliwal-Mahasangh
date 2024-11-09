@@ -76,13 +76,17 @@ const Motivationline = () => {
               <FaChevronLeft className="text-orange-500 text-xl" />
             </button>
 
-            <div className="overflow-hidden">
-              <div className={`
-                transform transition-all duration-500 ease-in-out
-                ${isAnimating && direction === 'next' ? '-translate-x-full opacity-0' : ''}
-                ${isAnimating && direction === 'prev' ? 'translate-x-full opacity-0' : ''}
-                text-center max-w-2xl mx-auto px-12
-              `}>
+            <div className="overflow-hidden relative">
+              <div 
+                className={`
+                  transform transition-transform duration-500 ease-in-out
+                  ${isAnimating && direction === 'next' ? 'animate-slide-exit-left' : ''}
+                  ${isAnimating && direction === 'prev' ? 'animate-slide-exit-right' : ''}
+                  ${!isAnimating && direction === 'next' ? 'animate-slide-from-right' : ''}
+                  ${!isAnimating && direction === 'prev' ? 'animate-slide-from-left' : ''}
+                  text-center max-w-2xl mx-auto px-12
+                `}
+              >
                 <h2 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-hindi font-bold text-orange-500 leading-relaxed">
                   {quotes[currentIndex].text}
                 </h2>

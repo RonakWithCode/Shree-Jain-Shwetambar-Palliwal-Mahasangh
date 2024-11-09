@@ -59,7 +59,7 @@ const InfoCard = memo(() => {
 
           <div>
             <h2 className="text-2xl font-bold font-hindi bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent mb-2">
-              सहयोग संस्था
+            सहयोगी संस्थाएं
             </h2>
             <div className="flex items-center gap-2 bg-orange-100 rounded-full px-4 py-1">
               {/* <CalendarIcon /> */}

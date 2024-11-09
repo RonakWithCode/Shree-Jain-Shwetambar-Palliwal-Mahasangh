@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from 'react';
-
 import { 
   databases, 
   storage, 
@@ -9,28 +8,29 @@ import {
   DATABASE_ID,
   ID,
   Query,
-  FORM_CATEGORIES,
-  CATEGORY_LABELS 
 } from '@/lib/appwrite';
 import { toast } from 'react-hot-toast';
+import { FaDownload, FaTrash, FaEye } from 'react-icons/fa';
 
 export default function ApplicationForms() {
   const [forms, setForms] = useState({});
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [showNewCategoryInput, setShowNewCategoryInput] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     isActive: true,
-    category: FORM_CATEGORIES.OTHER,
+    category: '',
     file: null
   });
 
-  // Fetch existing forms
   useEffect(() => {
     fetchForms();
   }, []);
 
   const fetchForms = async () => {
+    setLoading(true);
     try {
       const response = await databases.listDocuments(
         DATABASE_ID,
@@ -38,9 +38,13 @@ export default function ApplicationForms() {
         [Query.orderDesc('$createdAt')]
       );
       
+      // Extract unique categories from forms
+      const uniqueCategories = [...new Set(response.documents.map(form => form.category))].filter(Boolean);
+      setCategories(uniqueCategories.sort());
+      
       // Group forms by category
       const groupedForms = response.documents.reduce((acc, form) => {
-        const category = form.category || FORM_CATEGORIES.OTHER;
+        const category = form.category || 'Other';
         if (!acc[category]) {
           acc[category] = [];
         }
@@ -52,14 +56,28 @@ export default function ApplicationForms() {
     } catch (error) {
       console.error('Error fetching forms:', error);
       toast.error('Failed to fetch forms');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFormData(prev => ({ ...prev, file }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setUploading(true);
+    if (!formData.file) {
+      toast.error('Please select a file');
+      return;
+    }
 
+    setUploading(true);
     try {
+      const category = formData.category.trim();
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
       const fileExtension = formData.file.name.split('.').pop();
       const newFileName = `${formData.title}-${timestamp}.${fileExtension}`;
@@ -85,7 +103,7 @@ export default function ApplicationForms() {
         {
           title: formData.title,
           isActive: formData.isActive,
-          category: formData.category,
+          category: category,
           fileId: fileUpload.$id,
           fileName: newFileName,
           fileSize: newFile.size,
@@ -96,7 +114,12 @@ export default function ApplicationForms() {
         }
       );
 
-      setFormData({ title: '', isActive: true, category: FORM_CATEGORIES.OTHER, file: null });
+      setFormData({ 
+        title: '', 
+        isActive: true, 
+        category: '', 
+        file: null 
+      });
       toast.success('Form uploaded successfully');
       fetchForms();
     } catch (error) {
@@ -107,34 +130,22 @@ export default function ApplicationForms() {
     }
   };
 
-  const toggleFormStatus = async (form) => {
-    try {
-      await databases.updateDocument(
-        DATABASE_ID,
-        APPLICATION_FORM_COLLECTION_ID,
-        form.$id,
-        { isActive: !form.isActive }
-      );
-      toast.success('Status updated successfully');
-      fetchForms();
-    } catch (error) {
-      console.error('Error updating status:', error);
-      toast.error('Failed to update status');
+  const handleDeleteForm = async (form) => {
+    if (!window.confirm('Are you sure you want to delete this form?')) {
+      return;
     }
-  };
-
-  const deleteForm = async (form) => {
-    if (!window.confirm('Are you sure you want to delete this form?')) return;
 
     try {
-      // Delete file from storage
+      // Delete the file from storage
       await storage.deleteFile(APPLICATION_FORM_BUCKET_ID, form.fileId);
-      // Delete database entry
+      
+      // Delete the document from database
       await databases.deleteDocument(
         DATABASE_ID,
         APPLICATION_FORM_COLLECTION_ID,
         form.$id
       );
+
       toast.success('Form deleted successfully');
       fetchForms();
     } catch (error) {
@@ -151,6 +162,7 @@ export default function ApplicationForms() {
       <div className="bg-white p-6 rounded-lg shadow-md mb-8">
         <h2 className="text-xl font-semibold mb-4">Upload New Form</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Title Input */}
           <div>
             <label className="block text-sm font-medium text-gray-700">Title</label>
             <input
@@ -162,137 +174,141 @@ export default function ApplicationForms() {
             />
           </div>
 
+          {/* Category Input */}
           <div>
             <label className="block text-sm font-medium text-gray-700">Category</label>
-            <select
-              value={formData.category}
-              onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              required
-            >
-              {Object.entries(CATEGORY_LABELS).map(([value, label]) => (
-                <option key={value} value={value}>{label}</option>
-              ))}
-            </select>
+            <div className="flex gap-2">
+              {showNewCategoryInput ? (
+                <input
+                  type="text"
+                  value={formData.category}
+                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                  placeholder="Enter new category"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  required
+                />
+              ) : (
+                <select
+                  value={formData.category}
+                  onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  required
+                >
+                  <option value="">Select Category</option>
+                  {categories.map((category) => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              )}
+              <button
+                type="button"
+                onClick={() => {
+                  setShowNewCategoryInput(!showNewCategoryInput);
+                  setFormData(prev => ({ ...prev, category: '' }));
+                }}
+                className="mt-1 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+              >
+                {showNewCategoryInput ? 'Select Existing' : 'New Category'}
+              </button>
+            </div>
           </div>
 
+          {/* File Input */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">Form File (PDF/Image)</label>
+            <label className="block text-sm font-medium text-gray-700">File</label>
             <input
               type="file"
-              accept=".pdf,image/*"
-              onChange={(e) => setFormData({ ...formData, file: e.target.files[0] })}
-              className="mt-1 block w-full"
+              onChange={handleFileChange}
+              className="mt-1 block w-full text-sm text-gray-500
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-md file:border-0
+                file:text-sm file:font-semibold
+                file:bg-blue-50 file:text-blue-700
+                hover:file:bg-blue-100"
               required
             />
           </div>
 
+          {/* Active Status */}
           <div className="flex items-center">
             <input
               type="checkbox"
+              id="isActive"
               checked={formData.isActive}
               onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
               className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
             />
-            <label className="ml-2 block text-sm text-gray-700">Active</label>
+            <label htmlFor="isActive" className="ml-2 block text-sm text-gray-900">
+              Active
+            </label>
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={uploading}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 
-              disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white 
+              ${uploading ? 'bg-gray-400' : 'bg-blue-600 hover:bg-blue-700'}`}
           >
             {uploading ? 'Uploading...' : 'Upload Form'}
           </button>
         </form>
       </div>
 
-      {/* Forms List by Category */}
+      {/* Forms List */}
       <div className="space-y-8">
-        {Object.entries(CATEGORY_LABELS).map(([category, label]) => (
+        {Object.entries(forms).map(([category, categoryForms]) => (
           <div key={category} className="bg-white rounded-lg shadow-md">
             <h2 className="text-xl font-semibold p-6 border-b bg-gray-50">
-              {label}
-              {forms[category] && (
-                <span className="ml-2 text-sm text-gray-500">
-                  ({forms[category].length})
-                </span>
-              )}
+              {category}
+              <span className="ml-2 text-sm text-gray-500">
+                ({categoryForms.length})
+              </span>
             </h2>
-            <div className="overflow-x-auto">
-              {forms[category] && forms[category].length > 0 ? (
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Download</th>
-                      <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {forms[category].map((form) => (
-                      <tr key={form.$id}>
-                        <td className="px-6 py-4 whitespace-nowrap">{form.title}</td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <button
-                            onClick={() => toggleFormStatus(form)}
-                            className={`px-2 py-1 rounded-full text-xs font-medium ${
-                              form.isActive 
-                                ? 'bg-green-100 text-green-800' 
-                                : 'bg-red-100 text-red-800'
-                            }`}
-                          >
-                            {form.isActive ? 'Active' : 'Inactive'}
-                          </button>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <a
-                            href={form.downloadUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-800 flex items-center"
-                          >
-                            <svg
-                              className="w-4 h-4 mr-1"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                              />
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                              />
-                            </svg>
-                            download
-                          </a>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <button
-                            onClick={() => deleteForm(form)}
-                            className="text-red-600 hover:text-red-800"
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <div className="p-6 text-center text-gray-500">
-                  No forms in this category
+            <div className="divide-y divide-gray-200">
+              {categoryForms.map((form) => (
+                <div key={form.$id} className="p-6 flex items-center justify-between">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-medium text-gray-900">{form.title}</h3>
+                    <p className="text-sm text-gray-500">
+                      Uploaded on {new Date(form.uploadedAt).toLocaleDateString()}
+                    </p>
+                    {!form.isActive && (
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
+                        Inactive
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <a
+                      href={form.previewUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-400 hover:text-gray-500"
+                      title="Preview"
+                    >
+                      <FaEye className="h-5 w-5" />
+                    </a>
+                    <a
+                      href={form.downloadUrl}
+                      download
+                      className="text-gray-400 hover:text-gray-500"
+                      title="Download"
+                    >
+                      <FaDownload className="h-5 w-5" />
+                    </a>
+                    <button
+                      onClick={() => handleDeleteForm(form)}
+                      className="text-red-400 hover:text-red-500"
+                      title="Delete"
+                    >
+                      <FaTrash className="h-5 w-5" />
+                    </button>
+                  </div>
                 </div>
-              )}
+              ))}
             </div>
           </div>
         ))}

@@ -33,7 +33,7 @@ const AhimsaHand = () => (
 const footerLinks = [
   { href: '/contact', label: 'संपर्क करें', labelEn: 'Contact' },
   { href: '/current-executive', label: 'वर्तमान कार्यकारिणी', labelEn: 'Contact' },
-  { href: '/magazine-officer', label: 'पत्रिका अधिकारी', labelEn: 'Contact' },
+  { href: '/magazine-officer', label: 'पत्रिका', labelEn: 'Contact' },
   // { href: 'https://www.ronosoft.com', label: 'हमारी एजेंसी', labelEn: 'Our Agency' }, // Link to Ronosoft
 ];
 
@@ -93,7 +93,7 @@ export default function Footer() {
             <address className="not-italic space-y-3 text-orange-700">
               <p className="flex items-center">
                 <FaMapMarkerAlt className="text-orange-500 mr-3" />
-                श्री जैन श्वेतांबर पल्लीवाल महासंघ मंदिर के पास
+                श्री जैन श्वेतांबर पल्लीवाल महासंघ
               </p>
               <p className="flex items-center">
                 <FaPhone className="text-orange-500 rotate-90 mr-3" />

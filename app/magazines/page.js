@@ -32,7 +32,8 @@ export default function MagazinesPage() {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-amber-50 to-amber-100">
                 <div className="animate-spin text-amber-600">
-                    <FaOm size={60} />
+                    {/* <FaOm size={60} /> */}
+                    <Image src="/images/jainlogo/Jainism.svg" alt="Jain Symbol" width={60} height={60} />
                 </div>
             </div>
         );
@@ -72,7 +73,8 @@ export default function MagazinesPage() {
                 {/* Enhanced Om Symbol with Glow */}
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                     <div className="relative">
-                        <FaOm size={400} className="text-amber-800 opacity-5" />
+                        <Image className="text-amber-800 opacity-5" src="/images/jainlogo/Jainism.svg" alt="Jain Symbol" width={400} height={400} />
+                        {/* <FaOm size={400} className="text-amber-800 opacity-5" /> */}
                         <div className="absolute inset-0 blur-xl bg-amber-500 opacity-10" />
                     </div>
                 </div>
@@ -105,7 +107,8 @@ export default function MagazinesPage() {
                             <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-amber-600 to-transparent mx-auto mb-2"></div>
                             <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-amber-600 to-transparent mx-auto"></div>
                             <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                                <FaOm size={16} className="text-amber-600" />
+                                {/* <FaOm size={16} className="text-amber-600" /> */}
+                                {/* <Image src="/images/jainlogo/Jainism.svg" alt="Jain Symbol" width={16} height={16} /> */}
                             </div>
                         </div>
 
