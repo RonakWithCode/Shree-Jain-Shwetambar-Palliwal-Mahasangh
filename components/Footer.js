@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
@@ -56,7 +57,9 @@ export default function Footer() {
           <div className="text-center md:text-left">
             <div className="flex items-center justify-center md:justify-start mb-4">
               <div className="w-10 h-10 mr-3 text-orange-600">
-                <JainSymbol />
+                {/* <JainSymbol /> */}
+                {/* <img src="/images/jain-logo.jpg" alt="Jain Logo" className="w-25 h-24" /> */}
+                <Image src="/images/jain-logo.jpg" alt="Jain Logo" width={150} height={150} />
               </div>
               <h3 className="text-2xl font-bold text-orange-800">श्री जैन श्वेतांबर पल्लीवाल महासंघ</h3>
             </div>
@@ -129,7 +132,8 @@ export default function Footer() {
         <div className="mt-8 pt-4 border-t border-orange-200 text-center">
           <div className="flex items-center justify-center mb-2">
             <div className="w-8 h-8 text-orange-600">
-              <JainSymbol />
+              {/* <JainSymbol /> */}
+              <Image src="/images/jain-logo.jpg" alt="Jain Logo" width={150} height={150} />
             </div>
           </div>
           <p className="text-orange-700">

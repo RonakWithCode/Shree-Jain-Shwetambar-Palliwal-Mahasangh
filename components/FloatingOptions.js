@@ -41,7 +41,7 @@ const FloatingOptions = () => {
       action: () => window.scrollTo({ top: 0, behavior: 'smooth' })
     },
     { 
-      label: 'पत्रिका', 
+      label: 'जैन पत्रिका', 
       icon: FaMapMarkedAlt, 
       color: 'bg-yellow-500 hover:bg-yellow-600',
       action: () => {

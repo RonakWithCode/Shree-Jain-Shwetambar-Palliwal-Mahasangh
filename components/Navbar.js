@@ -30,7 +30,7 @@ const navItems = [
     ]
   },
   { href: '/photo-gallery', label: 'फोटो गैलरी' },
-  { href: '/federation-activity', label: 'महासंघ गतिविधि' },
+  { href: '/federation-activity', label: 'महासंघ गतिविधियाँ' },
   { href: '/application-form', label: 'आवेदन प्रपत्र' },
   { href: '/donation', label: 'अर्थ सहयोग' },
   { href: '/contact', label: 'संपर्क' },

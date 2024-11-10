@@ -8,56 +8,56 @@ const slides = [
   {
     image: '/images/jain-logo.jpg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
-    title: 'महासंघ द्वारा संचालित प्रवृत्तियां',
-    description: 'श्महासंघ के साथ महिला व युवा महासंघ के माध्यम से...',
+    title: 'विधवा पेंशन योजना',
+    description: 'साधर्मिक विधवा बहिनों को महासंघ द्वारा मासिक सहायता ',
     gradient: 'from-orange-600 to-red-600'
   },
   {
     image: '/images/sadhrmik.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
-    title: 'धार्मिक शिक्षा कार्यक्रम',
-    description: 'साधर्मिक का स्वाबलम्बन हेतु 50000 रु. का ऋण प्रदान करना ( बिना पुनर्भरण 6 माह बाद 2500 रु, 20 मासिक किश्तों में )',
+    title: 'स्वावलंबन योजना',
+    description: 'साधर्मिकों को स्वावलंबन हेतु 50,000 रु. की राशि का ऋण प्रदान करना (बिना ब्याज, पुनर्भरण 6 माह बाद, 2,500 रु. की 20 मासिक किश्तों में)।',
     gradient: 'from-green-600 to-teal-600'
   },
   {
     image: '/images/serve.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'सामाजिक सेवा गतिविधियाँ',
-    description: 'असहाय साधर्मिक भाई बहिनों को भरण पोषण हेतु 1000 रु. प्रति माह सहायता करना।',
+    description: 'असहाय साधर्मिक भाई-बहनों को भरण-पोषण हेतु 1,000 रु. प्रति माह सहायता करना।',
     gradient: 'from-blue-600 to-indigo-600'
   },
   {
     image: '/images/serve.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
-    title: 'आध्यात्मिक प्रशिक्षण',
-    description: 'पल्लीवाल संदेश मासिक पत्रिका के प्रकाशन द्वारा धार्मिक एवं सामाजिक गतिविधियों का प्रचार प्रसार करना।',
+    title: 'मासिक पत्रिका का प्रकाशन',
+    description: 'पल्लीवाल संदेश मासिक पत्रिका के प्रकाशन द्वारा धार्मिक एवं सामाजिक गतिविधियों का प्रचार-प्रसार करना।',
     gradient: 'from-purple-600 to-pink-600'
   },
-  {
+  { 
     image: '/images/serve.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
-    title: 'सामाजिक सेवा',
-    description: 'पल्लीवाल शिरोमणि श्री जोधराज दीवान छात्रवृत्ति योजना में 12वीं उत्तीर्ण को 12000 रु. की एक मुश्त छात्र दी जा रही है।',
+    title: 'श्री जोधराज दीवान छात्रवृत्ति योजना',
+    description: 'पल्लीवाल शिरोमणि श्री जोधराज दीवान छात्रवृत्ति योजना के अंतर्गत 12वीं कक्षा उत्तीर्ण विद्यार्थियों को 12,000 रु. की एकमुश्त छात्रवृत्ति दी जा रही है।',
     gradient: 'from-yellow-600 to-amber-600'
   },
   {
     image: '/images/serve.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
-    title: ' द्वारा सचालित प्रवृत्तिया',
-    description: 'सिरस तीर्थ पर भूखणद क्रय व चारदिवारी निर्माण योजना',
+    title: 'भूखंड क्रय एवं चारदीवारी निर्माण योजना',
+    description: 'सिरस तीर्थ पर भूखंड क्रय एवं चारदीवारी निर्माण योजना।',
     gradient: 'from-cyan-600 to-teal-600'
   },
   {
     image: '/images/tirth.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
-    title: 'सामाजिक सेवा गतिविधियाँ',
-    description: 'पल्लीवाल जैन समाज के अच्छे पैकेज पर काम कर रहें बच्चों का डाटा कलेक्शन का कार्य किया जा रहा हैं।',
+    title: 'डेटा संग्रहण योजना',
+    description: 'पल्लीवाल जैन समाज के अच्छे पैकेज पर कार्यरत युवाओं का डेटा संग्रहण कार्य किया जा रहा है।',
     gradient: 'from-pink-600 to-rose-600'
   }
 ];
 
 const NavButton = memo(({ onClick, icon: Icon, direction, disabled }) => (
-  <motion.button
+  <motion.button 
     whileHover={{ scale: 1.1 }}
     whileTap={{ scale: 0.9 }}
     onClick={onClick}

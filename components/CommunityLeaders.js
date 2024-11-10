@@ -1,26 +1,31 @@
 import Image from 'next/image';
 import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
 
+
 const leaders = [
     {
         id: 1,
         name: 'श्री राजेन्द्र कुमार जैन',
         position: 'अध्यक्ष',
+        location: 'सूर्यनगर',
         image: '/images/leaders/Rajendra-Kumar-Jain.jpeg'
     },
     {
         id: 2,
         name: 'श्री मनोज कुमार जैन',
         position: 'महामंत्री',
+        location: 'बड़ौदाकान',
         image: '/images/leaders/Manoj-Kumar-Jain.jpeg'
     },
     {
         id: 3,
         name: 'श्री विपिन कुमार जैन',
         position: 'कोषाध्यक्ष',
+        location: 'करौली',
         image: '/images/leaders/Vipin-Kumar-Jain.jpeg'
     },
 ];
+
 
 export default function CommunityLeaders() {
     return (
@@ -95,23 +100,20 @@ export default function CommunityLeaders() {
                                 <div className="absolute -bottom-2 -right-2 sm:-bottom-3 sm:-right-3 w-4 h-4 sm:w-6 sm:h-6 border-b-2 border-r-2 border-amber-600"></div>
                             </div>
 
-                            {/* Text Content with enhanced styling */}
-                            <div className="text-center relative">
-                                <h3 className="text-lg sm:text-xl font-bold text-amber-800 mb-2 relative">
-                                    {leader.name}
-                                    <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-amber-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-                                </h3>
-                                <div className="relative inline-block">
-                                    <p className="text-sm bg-amber-50 px-4 sm:px-6 py-1.5 sm:py-2 rounded-full border border-amber-200 shadow-sm">
+                           
+                                {/* Text Content */}
+                                <div className="text-center">
+                                    <h3 className="text-lg font-bold text-amber-800 mb-1">
+                                        {leader.name}
+                                    </h3>
+                                    <p className="text-sm text-amber-700 font-medium">
+                                        {leader.location}
+                                    </p>
+                                    <p className="text-sm bg-amber-50 px-3 py-1 rounded-full border border-amber-200 shadow-sm mb-1">
                                         {leader.position}
                                     </p>
-                                    <div className="absolute -right-1 -top-1 sm:-right-2 sm:-top-2">
-                                        {/* <FaOm size={10} className="text-amber-600" /> */}
-                                        <Image src="/images/jainlogo/Jainism.svg" alt="Jain Symbol" width={10} height={10} />
-                                    </div>
                                 </div>
                             </div>
-                        </div>
                     ))}
                 </div>
 

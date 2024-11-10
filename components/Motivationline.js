@@ -87,12 +87,20 @@ const Motivationline = () => {
                   text-center max-w-2xl mx-auto px-12
                 `}
               >
-                <h2 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-hindi font-bold text-orange-500 leading-relaxed">
-                  {quotes[currentIndex].text}
-                </h2>
-                <p className="text-orange-400 mt-2 font-hindi text-sm sm:text-base md:text-lg lg:text-xl font-semibold">
-                  – {quotes[currentIndex].author}
-                </p>
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6">
+                  <h2 className="text-base sm:text-lg md:text-2xl lg:text-3xl 
+                    font-hindi font-bold text-orange-600 leading-relaxed
+                    tracking-wide antialiased"
+                  >
+                    {quotes[currentIndex].text}
+                  </h2>
+                  <p className="text-orange-500 mt-4 font-hindi 
+                    text-sm sm:text-base md:text-lg lg:text-xl 
+                    font-medium tracking-wide antialiased"
+                  >
+                    – {quotes[currentIndex].author}
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -121,6 +129,9 @@ const Motivationline = () => {
           </div>
         </div>
       </div>
+
+      {/* Optional: Add subtle background pattern */}
+      <div className="absolute inset-0 bg-gradient-to-r from-orange-50/20 via-transparent to-orange-50/20 pointer-events-none" />
     </div>
   );
 };

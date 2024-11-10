@@ -1,10 +1,7 @@
 "use client";
 import React, { useState } from 'react';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FaSearch } from 'react-icons/fa';
-
-const PLACEHOLDER_IMAGE = "/images/Profile_avatar_placeholder_large.png";
 
 const leadershipData = [
     {
@@ -22,7 +19,7 @@ const leadershipData = [
             name: "पदम चंद जैन",
             location: "(सहस्र-सुनारी) हिण्डौन"
         },
-        note: "तदर्थ समिति"
+        // note: "तदर्थ समिति"
     },
     {
         id: "02",
@@ -226,35 +223,6 @@ const leadershipData = [
     }
 ];
 
-const OptimizedImage = ({ src, alt, priority, ...props }) => {
-    const [isError, setIsError] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
-
-    return (
-        <div className="relative w-full h-full">
-            <Image
-                src={isError ? PLACEHOLDER_IMAGE : src}
-                alt={alt}
-                onError={() => setIsError(true)}
-                onLoadingComplete={() => setIsLoading(false)}
-                quality={75}
-                loading={priority ? undefined : 'lazy'}
-                className={`
-                    duration-700 ease-in-out
-                    ${isLoading ? 'scale-110 blur-lg' : 'scale-100 blur-0'}
-                    ${props.className || ''}
-                `}
-                {...props}
-            />
-            {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-orange-50">
-                    <div className="w-8 h-8 border-4 border-orange-400 border-t-transparent rounded-full animate-spin" />
-                </div>
-            )}
-        </div>
-    );
-};
-
 const PresidentCard = ({ data, index }) => (
     <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -271,21 +239,28 @@ const PresidentCard = ({ data, index }) => (
             {data.id}
         </div>
 
-        {/* Image Container */}
-        <div className="relative h-48 sm:h-56 bg-gradient-to-b from-orange-50 to-orange-100
-            overflow-hidden group">
-            <OptimizedImage
-                src={PLACEHOLDER_IMAGE}
-                alt={data.president.name}
-                fill
-                className="object-cover transition-transform duration-500 
-                    group-hover:scale-105"
-                sizes="(max-width: 640px) 100vw, 
-                       (max-width: 1024px) 50vw,
-                       33vw"
-                priority={index < 3}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        {/* Time Period Display (Replacing Image) */}
+        <div className="relative bg-gradient-to-br from-orange-50 via-orange-100 to-orange-50 
+            p-6 text-center border-b border-orange-200">
+            <div className="space-y-3">
+                <h4 className="text-lg font-semibold text-orange-800 font-hindi">
+                    कार्यकाल
+                </h4>
+                <div className="flex items-center justify-center space-x-2">
+                    <div className="h-px w-12 bg-orange-300"></div>
+                    <div className="w-3 h-3 rounded-full bg-orange-400"></div>
+                    <div className="h-px w-12 bg-orange-300"></div>
+                </div>
+                <p className="text-xl font-bold text-gray-800 font-hindi">
+                    {data.period}
+                </p>
+                {data.note && (
+                    <span className="inline-block mt-2 px-3 py-1 bg-orange-100 
+                        text-orange-700 rounded-full text-sm font-hindi">
+                        {data.note}
+                    </span>
+                )}
+            </div>
         </div>
 
         {/* Content */}
@@ -301,11 +276,6 @@ const PresidentCard = ({ data, index }) => (
             </div>
 
             <div className="space-y-3">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 text-gray-600">
-                    <span className="font-semibold font-hindi tracking-wide">कार्यकाल:</span>
-                    <span className="font-hindi leading-relaxed tracking-wide">{data.period}</span>
-                </div>
-
                 <div className="space-y-2">
                     <span className="font-semibold font-hindi tracking-wide block">महामंत्री:</span>
                     {Array.isArray(data.secretary) ? (
@@ -335,14 +305,6 @@ const PresidentCard = ({ data, index }) => (
                     </span>
                 </div>
             </div>
-
-            {/* Note if exists */}
-            {data.note && (
-                <div className="mt-4 py-2 px-4 bg-orange-50 rounded-lg 
-                    text-orange-600 font-semibold font-hindi text-sm">
-                    {data.note}
-                </div>
-            )}
         </div>
     </motion.div>
 );
