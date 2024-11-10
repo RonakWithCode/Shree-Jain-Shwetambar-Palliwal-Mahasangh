@@ -227,7 +227,7 @@ const CurtainAnimation = ({ onComplete }) => {
             textShadow: '0 0 20px rgba(255,215,0,0.5)'
           }}
         >
-          श्री दिगम्बर जैन महासभा
+          श्री जैन श्वेतांबर पल्लीवाल महासंघ
         </motion.h1>
         <motion.p 
           className="text-xl md:text-2xl text-white font-hindi mt-8"

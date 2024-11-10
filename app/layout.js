@@ -39,7 +39,10 @@ export default function RootLayout({ children }) {
             >
               {children}
             </main>
+            {/* <div className="bg-orange-200 pb-6"> */}
             <Footer />
+          
+            {/* </div> */}
           </div>
         </AnimatedWrapper>
       </body>
