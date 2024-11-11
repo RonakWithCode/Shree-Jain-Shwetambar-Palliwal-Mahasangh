@@ -61,7 +61,7 @@ export default function CommunityLeaders() {
                     <div className="flex justify-center items-center gap-2">
                         <FaQuoteLeft className="text-amber-600 text-sm sm:text-base" />
                         <p className="text-base sm:text-lg text-gray-600">
-                            श्वेताम्बर पल्लीवाल महासंघ जैन समाज सदस्य</p>
+                            श्वेताम्बर पल्लीवाल महासंघ</p>
                         <FaQuoteRight className="text-amber-600 text-sm sm:text-base" />
                     </div>
                 </div>

@@ -45,7 +45,7 @@ export default function MagazineCard({ magazine }) {
       <div className="p-4 space-y-3 bg-gradient-to-b from-white to-amber-50">
         <div className="flex items-center justify-center gap-2">
           <SiJoplin className="text-saffron-600" size={16} />
-          <h3 className="text-xl font-bold text-center">श्रमणोपासक</h3>
+          <h3 className="text-xl font-bold text-center">जैन संदेश पत्रिका</h3>
           <SiJoplin className="text-saffron-600" size={16} />
         </div>
         <p className="text-blue-600 text-center font-semibold">

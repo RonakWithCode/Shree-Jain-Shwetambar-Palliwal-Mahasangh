@@ -35,13 +35,13 @@ const FloatingOptions = () => {
 
   const options = [
     { 
-      label: 'महासंघ गतिविधि', 
+      label: 'महासंघ गतिविधियाँ', 
       icon: FaBookOpen, 
       color: 'bg-red-500 hover:bg-red-600',
       action: () => window.scrollTo({ top: 0, behavior: 'smooth' })
     },
     { 
-      label: 'जैन पत्रिका', 
+      label: 'जैन संदेश पत्रिका', 
       icon: FaMapMarkedAlt, 
       color: 'bg-yellow-500 hover:bg-yellow-600',
       action: () => {

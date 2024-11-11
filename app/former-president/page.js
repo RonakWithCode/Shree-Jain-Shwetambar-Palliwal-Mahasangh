@@ -8,7 +8,7 @@ const leadershipData = [
         id: "01",
         period: "16 मई 1993 से 10 जून 1995",
         president: {
-            name: "बाबूलाल जैन",
+            name: "अध्यक्ष बाबूलाल जैन",
             location: "दिवरला, हिण्डौन"
         },
         secretary: {
@@ -209,7 +209,7 @@ const leadershipData = [
         id: "13",
         period: "26 फरवरी 2023 से लगातार",
         president: {
-            name: "राजेन्द्र कुमर जैन",
+            name: "राजेन्द्र कुमार जैन",
             location: "(नंगलाभाई) अलवर"
         },
         secretary: {
