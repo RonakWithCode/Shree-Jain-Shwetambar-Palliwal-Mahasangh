@@ -105,8 +105,7 @@ const SlideImage = memo(({ src, alt, blurDataURL }) => (
              (max-width: 768px) 75vw,
              (max-width: 1024px) 50vw,
              40vw"
-      className="object-cover transition-transform duration-700 
-        group-hover:scale-110 group-hover:rotate-1"
+      className="object-fill"
       loading="eager"
       placeholder="blur"
       blurDataURL={blurDataURL}

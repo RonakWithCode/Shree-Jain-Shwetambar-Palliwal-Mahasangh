@@ -8,16 +8,16 @@ const leadershipData = [
         id: "01",
         period: "16 मई 1993 से 10 जून 1995",
         president: {
-            name: "अध्यक्ष बाबूलाल जैन",
-            location: "दिवरला, हिण्डौन"
+            name: "बाबू लाल जैन",
+            location: "दिवर्या, हिण्डौन"
         },
         secretary: {
             name: "महेन्द्र कुमार जैन",
-            location: "(भावलापुरा) हिण्डौन"
+            location: "(भायलापुरा) हिण्डौन"
         },
         treasurer: {
             name: "पदम चंद जैन",
-            location: "(सहस्र-सुनारी) हिण्डौन"
+            location: "(सेहरा-सुनारी) हिण्डौन"
         },
         // note: "तदर्थ समिति"
     },
@@ -30,11 +30,11 @@ const leadershipData = [
         },
         secretary: {
             name: "मगन लाल जैन",
-            location: "दिवरला, हिण्डौन"
+            location: "दिवर्या, हिण्डौन"
         },
         treasurer: {
             name: "प्रदीप कुमार जैन",
-            location: "दिवरला, हिण्डौन"
+            location: "दिवर्या, हिण्डौन"
         }
     },
     {
@@ -46,11 +46,11 @@ const leadershipData = [
         },
         secretary: {
             name: "गोपाल लाल जैन",
-            location: "(क्यारदा) नई मंडी, हिण्डौन"
+            location: "(क्यारदा) नई मंड़ी, हिण्डौन"
         },
         treasurer: {
             name: "प्रदीप कुमार जैन",
-            location: "दिवरला, हिण्डौन"
+            location: "दिवर्या, हिण्डौन"
         }
     },
     {
@@ -73,16 +73,16 @@ const leadershipData = [
         id: "05",
         period: "07 जुलाई 2002 से 4 जून 2005",
         president: {
-            name: "सुमेरचंद जैन",
+            name: "सुमेरचंद जैन ",
             location: "भरतपुर"
         },
         secretary: {
             name: "महेन्द्र कुमार जैन",
-            location: "(भावलापुरा) हिण्डौन"
+            location: "(भायलापुरा) हिण्डौन"
         },
         treasurer: {
             name: "पदम चंद जैन",
-            location: "(सहस्र-सुनारी) हिण्डौन"
+            location: "(संहरा-सुनारी) हिण्डोन"
         }
     },
     {
@@ -125,8 +125,8 @@ const leadershipData = [
             location: "बयाना"
         },
         secretary: {
-            name: "गिरेन्द्र कुमार जैन",
-            location: "कर्मचारी, बयाना"
+            name: "विरेन्द्र कुमार जैन",
+            location: "कर्मयोगी, बरगमां"
         },
         treasurer: {
             name: "रोशन लाल जैन",
@@ -158,9 +158,9 @@ const leadershipData = [
         },
         secretary: [
             {
-                name: "डॉ. मनोज जैन",
-                location: "(बालमंडी) हिण्डौन",
-                duration: "(16 जनवरी 2016 तक)"
+                name: "1. डॉ. मनोज जैन",
+                location: "(तालविडी) हिण्डौन",
+                duration: "16 जनवरी 2016 तक"
             },
             {
                 name: "अशोक कुमार जैन",
@@ -169,7 +169,7 @@ const leadershipData = [
             }
         ],
         treasurer: {
-            name: "अशक कुमार जैन",
+            name: "अशोक कुमार जैन",
             location: "(घाट) हिण्डौन"
         }
     },
@@ -185,7 +185,7 @@ const leadershipData = [
             location: "(रसीदपुर) महवा"
         },
         treasurer: {
-            name: "पारसमल जैन",
+            name: "पार्श्वमल जैन",
             location: "(शेरपुर) हिण्डौन"
         }
     },
@@ -194,11 +194,11 @@ const leadershipData = [
         period: "23 फरवरी 2020 से 25 फरवरी 2023",
         president: {
             name: "राजेन्द्र कुमार जैन",
-            location: "(नंगलाभाई) अलवर"
+            location: "(नंगलामई) अलवर"
         },
         secretary: {
             name: "मनोज कुमार जैन",
-            location: "(बड़ौदाकलां) अलवर"
+            location: "(बड़ौदाकान) अलवर"
         },
         treasurer: {
             name: "विपिन जैन",
@@ -210,11 +210,11 @@ const leadershipData = [
         period: "26 फरवरी 2023 से लगातार",
         president: {
             name: "राजेन्द्र कुमार जैन",
-            location: "(नंगलाभाई) अलवर"
+            location: "(नंगलामई) अलवर"
         },
         secretary: {
             name: "मनोज कुमार जैन",
-            location: "(बड़ौदाकलां) अलवर"
+            location: "(बड़ौदाकान) अलवर"
         },
         treasurer: {
             name: "विपिन जैन",
