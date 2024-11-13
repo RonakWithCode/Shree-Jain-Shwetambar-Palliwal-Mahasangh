@@ -4,8 +4,23 @@ import { RiShareForwardLine } from 'react-icons/ri';
 import { SiJoplin } from 'react-icons/si';
 
 export default function MagazineCard({ magazine }) {
+  // Function to replace IP with cloud.appwrite.io
+  const getModifiedUrl = (url) => {
+    return url ? url.replace('88.222.215.5/v1', 'cloud.appwrite.io/v1') : '';
+  };
+
+  const handlePdfView = () => {
+    // Check if we have a PDF URL
+    if (magazine.pdfFileUrl) {
+      const pdfUrl = getModifiedUrl(magazine.pdfFileUrl);
+      window.open(pdfUrl, '_blank');
+    } else {
+      console.error('PDF URL not found');
+    }
+  };
+
   const handleShare = async (platform) => {
-    const shareUrl = magazine.pdfFileUrl;
+    const shareUrl = getModifiedUrl(magazine.pdfFileUrl);
     const text = `॥ नमो नमः॥ पत्रिकाएं - ${magazine.title}\n\nपढ़ें: `;
 
     switch (platform) {
@@ -33,9 +48,8 @@ export default function MagazineCard({ magazine }) {
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-duration-300 border-t-4 border-saffron-500">
       <div className="relative aspect-[3/4] w-full">
-   
         <Image
-          src={magazine.coverImageUrl}
+          src={getModifiedUrl(magazine.coverImageUrl)}
           alt={magazine.title}
           fill
           className="object-cover"
@@ -74,7 +88,7 @@ export default function MagazineCard({ magazine }) {
             <RiShareForwardLine size={24} />
           </button>
           <button
-            onClick={() => window.open(magazine.pdfFilbebUrl, '_blank')}
+            onClick={handlePdfView}
             className="text-orange-600 hover:text-orange-700 transition-colors"
             title="पत्रिका पढ़ें"
           >
