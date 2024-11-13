@@ -179,7 +179,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-medium">फ़ोन</h3>
-                    <p className="text-gray-600">+91 1234567890</p>
+                    <p className="text-gray-600">+91 9413304075</p>
                   </div>
                 </div>
 
@@ -191,7 +191,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-medium">ईमेल</h3>
-                    <p className="text-gray-600">contact@example.com</p>
+                    <p className="text-gray-600">palliwalmahasangh@gmail.com</p>
                   </div>
                 </div>
 
@@ -204,16 +204,16 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-medium">एड्रेस</h3>
-                    <p className="text-gray-600">123 Main St, City, State, ZIP</p>
+                    <p className="text-gray-600">जैन श्वेताम्बर उपाश्रय केशवपुरा, हिण्डौन सिटी करौली</p>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Map */}
-            <div className="bg-white rounded-xl shadow-lg p-8 h-[400px] hover:shadow-xl transition-shadow duration-300">
+            {/* <div className="bg-white rounded-xl shadow-lg p-8 h-[400px] hover:shadow-xl transition-shadow duration-300">
               <MapWithNoSSR location={LOCATION} />
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </div>

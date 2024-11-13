@@ -96,7 +96,7 @@ export default function Footer() {
             <address className="not-italic space-y-3 text-orange-700">
               <p className="flex items-center">
                 <FaMapMarkerAlt className="text-orange-500 mr-3" />
-                श्री जैन श्वेतांबर पल्लीवाल महासंघ
+                जैन श्वेताम्बर उपाश्रय केशवपुरा, हिण्डौन सिटी करौली
               </p>
               <p className="flex items-center">
                 <FaPhone className="text-orange-500 rotate-90 mr-3" />
@@ -113,17 +113,18 @@ export default function Footer() {
           <div>
             <h4 className="text-xl font-semibold mb-6 text-orange-800 flex items-center justify-center md:justify-start">
               <span className="w-8 h-0.5 bg-orange-400 mr-3"></span>
-              विकसित किया गया
+              Developed By
             </h4>
             <p className="text-orange-700">
-              यह वेबसाइट Ronosoft द्वारा विकसित की गई है।
+              This website is developed by Ronosoft.
             </p>
             <Link 
               href="https://www.ronosoft.com" 
               className="text-orange-700 hover:text-orange-500 transition-colors mt-2 inline-block"
-              target="_blank" // Opens external link in a new tab
+              target="_blank"
+              rel="noopener noreferrer" // Added for security best practices
             >
-              हमारी वेबसाइट पर जाएं
+              Visit Our Website
             </Link>
           </div>
         </div>
