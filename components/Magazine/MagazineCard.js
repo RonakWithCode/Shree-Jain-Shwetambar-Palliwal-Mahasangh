@@ -74,7 +74,7 @@ export default function MagazineCard({ magazine }) {
             <RiShareForwardLine size={24} />
           </button>
           <button
-            onClick={() => window.open(magazine.pdfFileUrl, '_blank')}
+            onClick={() => window.open(magazine.pdfFilbebUrl, '_blank')}
             className="text-orange-600 hover:text-orange-700 transition-colors"
             title="पत्रिका पढ़ें"
           >
