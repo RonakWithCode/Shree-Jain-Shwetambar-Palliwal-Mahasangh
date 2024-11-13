@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { databases, storage, DATABASE_ID, ID, Query } from '@/lib/appwrite';
+import { databases, storage, DATABASE_ID, ID, Query,PHOTO_GALLERY_BUCKET_ID ,ENDPOINT } from '@/lib/appwrite';
 import { FaPlus, FaTrash, FaEye, FaEyeSlash, FaSpinner } from 'react-icons/fa';
 import Image from 'next/image';
 
 // Create new constants for photo gallery collections
 const CATEGORIES_COLLECTION_ID = '6721f775003889370163'; // Create this collection in Appwrite
 const IMAGES_COLLECTION_ID = '6721f29f00114752fc9b'; // Create this collection in Appwrite
-const STORAGE_BUCKET_ID = process.env.NEXT_PUBLIC_APPWRITE_PHOTO_GALLERY_BUCKET_ID;
+const STORAGE_BUCKET_ID = PHOTO_GALLERY_BUCKET_ID;
 
 export default function PhotoGallery() {
   const [categories, setCategories] = useState([]);
@@ -306,7 +306,9 @@ export default function PhotoGallery() {
                   ${!image.isVisible ? 'opacity-50' : ''}`}
               >
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT}/storage/buckets/${STORAGE_BUCKET_ID}/files/${image.fileId}/view?project=${process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID}`}
+    // return `${ENDPOINT}/storage/buckets/${PHOTO_GALLERY_BUCKET_ID}/files/${fileId}/view?project=67237a03002bd713ceaf`;
+
+                  src={`${ENDPOINT}/storage/buckets/${PHOTO_GALLERY_BUCKET_ID}/files/${image.fileId}/view?project=67237a03002bd713ceaf`}
                   alt={image.fileName}
                   width={300}
                   height={300}

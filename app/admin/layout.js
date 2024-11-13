@@ -63,7 +63,7 @@ function AdminLayoutContent({ children }) {
                 {sidebarOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
               </button>
               <Link href="/admin/dashboard" className="font-semibold text-xl text-gray-800 ml-2">
-                Sadhumargi Admin
+              Mahasangh Admin
               </Link>
             </div>
             

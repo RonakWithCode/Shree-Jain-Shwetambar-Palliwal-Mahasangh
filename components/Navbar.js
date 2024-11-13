@@ -21,12 +21,12 @@ const navItems = [
     href: '/sangh', 
     label: 'महासंघ',
     subItems: [
-      { href: '/sangh/parichay', label: 'महासंघ परिचय' },
+      // { href: '/sangh/parichay', label: 'महासंघ परिचय' },
       { href: '/federation-purpose', label: 'महासंघ उद्देश्य' },
       { href: '/former-president', label: 'पूर्व अध्यक्ष गण' },
       { href: '/current-executive', label: 'वर्तमान कार्यकारिणी' },
       { href: '/magazine-officer', label: 'पत्रिका पदाधिकारी' },
-      { href: '/sangh/a', label: 'महासंघ की शाखाएं' },
+      { href: '/branches', label: 'महासंघ की शाखाएं' },
     ]
   },
   { href: '/photo-gallery', label: 'फोटो गैलरी' },
