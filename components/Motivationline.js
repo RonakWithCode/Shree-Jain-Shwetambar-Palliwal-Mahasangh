@@ -6,7 +6,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 const quotes = [
   { 
     text: "यदि क्षुधा से कम ग्रहण किया तो वह भी तप है।", 
-    author: "आचार्य श्री रमेश" 
+    author: "आचार्य श्री" 
   },
   { 
     text: "अहिंसा ही सबसे बड़ा धर्म है।", 

@@ -17,6 +17,7 @@ const NewsSection = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
   useEffect(() => {
     const fetchNews = async () => {
       try {
@@ -35,6 +36,10 @@ const NewsSection = () => {
   const nextNews = () => {
     setCurrentNews((prev) => (prev + 1) % newsItems.length);
   };
+  const getModifiedUrl = (url) => {
+    return url ? url.replace('88.222.215.5/v1', 'cloud.appwrite.io/v1') : '';
+  };
+
 
   const prevNews = () => {
     setCurrentNews((prev) => (prev - 1 + newsItems.length) % newsItems.length);
@@ -76,7 +81,7 @@ const NewsSection = () => {
           <div className={containerClasses}>
             <div className="relative w-full max-w-4xl mx-auto h-[300px] md:h-[400px] lg:h-[500px]">
               <Image 
-                src={newsItem.image}
+                src={getModifiedUrl(newsItem.image)}
                 alt={newsItem.alt || "News Image"}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
@@ -97,8 +102,8 @@ const NewsSection = () => {
               </h3>
               <div className="relative w-full h-[250px] md:h-[350px] lg:h-[450px]">
                 <Image 
-                  src={newsItem.image}
-                  alt={newsItem.alt || newsItem.title}
+                src={getModifiedUrl(newsItem.image)}
+                alt={newsItem.alt || newsItem.title}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
                   priority
@@ -119,8 +124,8 @@ const NewsSection = () => {
               </h3>
               <div className="relative w-full h-[200px] md:h-[300px] lg:h-[350px]">
                 <Image 
-                  src={newsItem.image}
-                  alt={newsItem.alt || newsItem.title}
+                src={getModifiedUrl(newsItem.image)}
+                alt={newsItem.alt || newsItem.title}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
                   priority
