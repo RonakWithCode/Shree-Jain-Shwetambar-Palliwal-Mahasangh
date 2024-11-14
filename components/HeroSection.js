@@ -27,28 +27,29 @@ const slides = [
     gradient: 'from-blue-600 to-indigo-600'
   },
   {
-    image: '/images/serve.jpeg',
+    image: '/images/magazines.png',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'मासिक पत्रिका का प्रकाशन',
     description: 'पल्लीवाल संदेश मासिक पत्रिका के प्रकाशन द्वारा धार्मिक एवं सामाजिक गतिविधियों का प्रचार-प्रसार करना।',
     gradient: 'from-purple-600 to-pink-600'
   },
   { 
-    image: '/images/serve.jpeg',
+    image: '/images/image5.png',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'श्री जोधराज दीवान छात्रवृत्ति योजना',
     description: 'पल्लीवाल शिरोमणि श्री जोधराज दीवान छात्रवृत्ति योजना के अंतर्गत 12वीं कक्षा उत्तीर्ण विद्यार्थियों को 12,000 रु. की एकमुश्त छात्रवृत्ति दी जा रही है।',
     gradient: 'from-yellow-600 to-amber-600'
   },
   {
-    image: '/images/serve.jpeg',
+    // image: '/images/serve.jpeg',
+    image: '/images/tirth.jpeg',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'भूखंड क्रय एवं चारदीवारी निर्माण योजना',
     description: 'सिरस तीर्थ पर भूखंड क्रय एवं चारदीवारी निर्माण योजना।',
     gradient: 'from-cyan-600 to-teal-600'
   },
   {
-    image: '/images/tirth.jpeg',
+    image: '/images/data.png',
     blurDataURL: "data:image/jpeg;base64,/9j...",
     title: 'डेटा संग्रहण योजना',
     description: 'पल्लीवाल जैन समाज के अच्छे पैकेज पर कार्यरत युवाओं का डेटा संग्रहण कार्य किया जा रहा है।',
