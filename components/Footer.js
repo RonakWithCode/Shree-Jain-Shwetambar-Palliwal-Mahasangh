@@ -110,23 +110,23 @@ export default function Footer() {
           </div>
 
           {/* Developed by Ronosoft */}
-          <div>
-            <h4 className="text-xl font-semibold mb-6 text-orange-800 flex items-center justify-center md:justify-start">
-              <span className="w-8 h-0.5 bg-orange-400 mr-3"></span>
-              Developed By
-            </h4>
-            <p className="text-orange-700">
-              This website is developed by Ronosoft.
-            </p>
-            <Link 
-              href="https://www.ronosoft.com" 
-              className="text-orange-700 hover:text-orange-500 transition-colors mt-2 inline-block"
-              target="_blank"
-              rel="noopener noreferrer" // Added for security best practices
-            >
-              Visit Our Website
-            </Link>
-          </div>
+          // <div>
+          //   <h4 className="text-xl font-semibold mb-6 text-orange-800 flex items-center justify-center md:justify-start">
+          //     <span className="w-8 h-0.5 bg-orange-400 mr-3"></span>
+          //     Developed By
+          //   </h4>
+          //   <p className="text-orange-700">
+          //     This website is developed by Ronosoft.
+          //   </p>
+          //   <Link 
+          //     href="https://www.ronosoft.com" 
+          //     className="text-orange-700 hover:text-orange-500 transition-colors mt-2 inline-block"
+          //     target="_blank"
+          //     rel="noopener noreferrer" // Added for security best practices
+          //   >
+          //     Visit Our Website
+          //   </Link>
+          // </div>
         </div>
 
         {/* Bottom Bar */}
