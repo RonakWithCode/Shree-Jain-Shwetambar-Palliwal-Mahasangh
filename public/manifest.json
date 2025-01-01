@@ -1,0 +1,23 @@
+{
+  "name": "श्री जैन श्वेतांबर पल्लीवाल महासंघ",
+  "short_name": "पल्लीवाल महासंघ",
+  "description": "जैन धर्म और संस्कृति को बढ़ावा देने वाला प्रमुख संगठन",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF5722",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "lang": "hi",
+  "dir": "ltr"
+}
